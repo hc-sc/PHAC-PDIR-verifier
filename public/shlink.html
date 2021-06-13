@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    <title>SHC Viewer</title>
+
+  </head>
+  <body>
+    <script>
+
+	  const ich = document.URL.indexOf("#shlink:/");
+	  const hash = (ich === -1 ? '' : document.URL.substring(ich));
+	  window.location = '/' + hash;
+
+    </script>
+  </body>
+</html>

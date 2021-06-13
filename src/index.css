@@ -1,0 +1,14 @@
+
+body {
+	font-family: 'Open Sans';
+	font-size: 14px;
+}
+
+.xtrahover {
+	background-color: whitesmoke;
+}
+
+#bundle-contents {
+	padding: 4px 4px 4px 4px;
+}
+

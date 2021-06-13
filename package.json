@@ -1,0 +1,44 @@
+{
+  "name": "shc-reader",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@fontsource/open-sans": "^4.5.14",
+    "@mui/icons-material": "^5.11.11",
+    "@mui/material": "^5.11.7",
+    "dompurify": "^3.0.5",
+    "fhirclient": "^2.5.2",
+    "html2canvas": "^1.4.1",
+    "jose": "^4.13.1",
+    "jspdf": "^2.5.1",
+    "pdfjs-dist": "^3.3.122",
+    "qr-scanner": "^1.4.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "smart-health-card-decoder": "github:smart-on-fhir/smart-health-card-decoder"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

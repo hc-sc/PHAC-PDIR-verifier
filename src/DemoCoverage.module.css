@@ -1,0 +1,212 @@
+
+.outermost {
+	background-color: #F3F7FF;
+	padding: 10px;
+	max-width: 1000px;
+}
+
+/* +------------------+
+   | verification bar |
+   +------------------+ */
+
+.topBar {
+	padding: 6px;
+	margin-bottom: 10px;
+	font-weight: bold;
+	color: #ffffff;
+}
+
+.valid {
+	background-color: #1C8E15;
+}
+
+.invalid {
+	background-color: red;
+}
+
+.mark {
+	margin-left: 4px;
+	margin-right: 8px;
+}
+
+/* +-----------+
+   | main grid | 
+   +-----------+ */
+
+.gridContainer {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: auto 16px auto;
+	background-color: white;
+}
+
+.banner, .demos, .benefits, .other {
+	padding-top: 0px;
+	padding-right: 12px;
+	padding-left: 12px;
+	padding-bottom: 14px;
+	/*border: 1px dashed black;  */
+}
+
+.greyBar {
+	width: 100%;
+	height: 16px;
+	margin-top: 12px;
+	padding: 0px;
+	background-color: lightgrey;
+}
+
+.doubleGrey {
+	grid-column: 2 / span 2;
+	grid-row: 2;
+	padding: 0px;
+	margin-left: 12px;
+	margin-right: 12px;
+	background-color: lightgrey;
+}
+
+.blueHeader {
+	color: blue;
+	font-size: 12px;
+	font-weight: bold;
+	display: flex;
+	padding-top: 12px;
+}
+
+.blueHeader:after {
+	content: '';
+	background-color: lightgrey;
+	flex: 1;
+	height: 1px;
+	margin-top: 7px;
+	margin-left: 6px;
+}
+
+.columnTable {
+	padding: 0px;
+	border: none;
+	width: 100%;
+}
+
+.columnTable th {
+	font-size: 14px;
+	font-weight: normal;
+	text-align: left;
+	white-space: nowrap;
+	vertical-align: top;
+	padding-bottom: 6px;
+}
+
+.columnTable td {
+	font-size: 14px;
+	font-weight: bold;
+	text-align: right;
+	vertical-align: top;
+	padding-left: 8px;
+	padding-bottom: 6px;
+}
+
+.columnTable .fw {
+	text-align: left;
+	column-span: 2;
+	font-size: 20px;
+	padding-left: 0px;
+	padding-top: 0px;
+}
+
+/* +--------+
+   | banner |
+   +--------+ */
+
+.banner {
+	grid-column: 1 / span 3;
+	grid-row: 1;
+	padding-top: 8px;
+}
+
+.banner img {
+	width: 40px;
+	height: 40px;
+	margin-right: 20px;
+	vertical-align: middle;
+}
+
+.banner .headerStatic {
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.banner .covEffective {
+	float: right;
+	padding: 2px;
+}
+
+.banner .covDate {
+	font-size: 20px;
+	font-weight: bold;
+	margin-left: 12px;
+}
+
+.banner .eyeButton {
+	padding-left: 30px;
+}
+
+/* +--------------+
+   | demographics |
+   +--------------+ */
+
+.demos {
+	grid-column: 1;
+	grid-row: 2 / span 2;
+	padding-top: 0px;
+}
+
+.demos .tinyHeader {
+	font-size: 10px;
+}
+
+.demos .biggerText {
+	font-size: 20px;
+	font-weight: 700;
+	margin-bottom: 10px;
+}
+
+/* +----------+
+   | benefits |
+   +----------+ */
+
+.benefits {
+	grid-column: 2;
+	grid-row: 3;
+}
+
+/* +-------+
+   | other |
+   +-------+ */
+
+.other {
+	grid-column: 3;
+	grid-row: 3;
+}
+
+.other .org {
+	padding-top: 6px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.other .payorLogo {
+	max-width: 60px;
+	float: right;
+}
+
+.other .smartLogo {
+	width: 60px;
+	float: right;
+}
+
+.other .ctnLogo {
+	width: 150px;
+	padding-top: 6px;
+	float: left;
+}

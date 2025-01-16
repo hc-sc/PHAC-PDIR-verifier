@@ -4,11 +4,22 @@
 	border-collapse: collapse;
 }
 
-.dataTable th, .dataTable td {
+.dataTable th {
+	min-width: 100px;
+	text-align: center;
+	vertical-align: center;
+	border: 2.5px solid grey;
+	padding: 8px 8px 8px 8px;
+	font-size: smaller;
+    background-color: lightgrey;
+
+}
+
+.dataTable td {
 	min-width: 100px;
 	text-align: left;
-	vertical-align: top;
-	border: 1px solid grey;
+	vertical-align: center;
+	border: 2.5px solid grey;
 	padding: 8px 8px 8px 8px;
 	font-size: smaller;
 }

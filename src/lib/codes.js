@@ -18,6 +18,12 @@ import config from './config.js';
 
 const systems = {
 
+  // National Vaccine Catalogue
+  "http://snomed.info/sct/20611000087101": {
+        "url": "https://raw.githubusercontent.com/hc-sc/hc-pdir-vaccine-lookup-table/refs/heads/main/vaccine-table/nvc-bundle.json",
+        "type": "nvc",
+        "placeHolder": "hhc-pdir-vaccine-lookup-table"
+    },
   // coverage-class
   "http://terminology.hl7.org/CodeSystem/coverage-class": {
 	"url": "https://build.fhir.org/ig/HL7/UTG/CodeSystem-coverage-class.json"
@@ -241,6 +247,9 @@ async function loadSystem(system) {
 	case "docket-cpt":
 	  return(parseDocketVaccineMappings(await response.json(), "cpt"));
 
+    case "nvc":
+      return (parseNVCVaccineMappings(await response.json(), "table"));
+
 	default:
 	  throw new Error(`Unknown system type ${type} for ${system}`);
   }
@@ -304,6 +313,21 @@ function parseDocketVaccineMappings(json, tag) {
   return(parsed);
 }
 
+// +----------------------------+
+// | parseNVCVaccineMappings |
+// +----------------------------+
+function parseNVCVaccineMappings(json, tag) {
+    const values = json[tag];
+    const parsed = {};
+    if (!values || typeof values !== "object") {
+        return {}; // Return an empty object if `values` is invalid or undefined
+    }
+    Object.keys(values).forEach((key) => {
+        const item = values[key];
+        parsed[key.toString()] = item.displayName || "Unknown";
+    });
+    return (parsed);
+}
 // +--------------+
 // | getFromLocal |
 // | saveToLocal  |

@@ -1,0 +1,40 @@
+.fileContainer {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.fileInputContainer {
+  margin: 20px 0;
+  position: relative;
+}
+
+.fileInput {
+  display: none;
+}
+
+.fileLabel {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.fileLabel:hover {
+  background-color: #0056b3;
+}
+
+.fileName {
+  margin-top: 10px;
+  color: #666;
+  font-style: italic;
+}
+
+.fileDescription {
+  color: #666;
+  font-size: 0.9em;
+  margin-top: 20px;
+} 

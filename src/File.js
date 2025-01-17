@@ -1,25 +1,41 @@
+import React from 'react';
+import { useLanguage } from './lib/LanguageContext';
+import styles from './File.module.css';
 
 export default function File({ viewData }) {
+  const { t } = useLanguage();
+  const [fileName, setFileName] = React.useState('');
 
-  const handleFileChange = async (evt) => {
-	const reader = new FileReader();
-	reader.onload = (evtRead) => { viewData(evtRead.target.result); }
-	reader.readAsText(evt.target.files[0]);
-  }
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setFileName(file.name);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const content = e.target.result;
+        viewData(content);
+      };
+      reader.readAsText(file);
+    }
+  };
 
   return (
-	<div>
-	  <h1>Open File</h1>
-
-	  <input id="file"
-			 type="file"
-			 accept=".json,.fhir,.smart-health-card"
-			 onChange={handleFileChange} />
-	  
-	  <p>
-		The viewer can typically read files with a <b>.smart-health-card</b> or <b>.fhir</b> extension.
-	  </p>
-	  
-	</div>
+    <div className={styles.fileContainer}>
+      <h2>{t('fileTitle')}</h2>
+      <div className={styles.fileInputContainer}>
+        <input
+          type="file"
+          id="fileInput"
+          accept=".smart-health-card,.fhir,.json"
+          onChange={handleFileChange}
+          className={styles.fileInput}
+        />
+        <label htmlFor="fileInput" className={styles.fileLabel}>
+          {t('chooseFile')}
+        </label>
+        <p className={styles.fileName}>{fileName || t('noFileChosen')}</p>
+      </div>
+      <p className={styles.fileDescription}>{t('fileDescription')}</p>
+    </div>
   );
 }

@@ -1,31 +1,19 @@
 
 import styles from './TCPFooter.module.css';
+import { useLanguage } from './lib/LanguageContext';
 
 export default function TCPFooter() {
+const { t } = useLanguage();
 
   return (
 	<div className={styles.container}>
 	  <div>
-		<a href="https://www.commonhealth.org/website-privacy-policy">Website Privacy Policy</a>
+		<a href="https://www.commonhealth.org/website-privacy-policy">{t('privacyPolicy')}</a>
 		&nbsp;|&nbsp;
-		<a href="https://www.commonhealth.org/terms">Terms of Service</a>
+		<a href="https://www.commonhealth.org/terms">{t('termsOfService')}</a>
 	  </div>
 	  <div>
-		<b>DISCLAIMER:</b> THE COMMONS PROJECT FOUNDATION (“TCP”) DOES NOT
-		PROVIDE MEDICAL ADVICE OR ADMINISTER ANY DIAGNOSTIC MEDICAL
-		TESTS, VACCINES OR OTHER HEALTHCARE INTERVENTIONS. TCP MAKES NO
-		ENDORSEMENT OR REPRESENTATION AS TO THE ACCREDITATION, LICENSING
-		OR GOOD-STANDING OF ANY HEALTHCARE PROVIDER UNDER APPLICABLE
-		STATE, FEDERAL, NATIONAL OR SUPRANATIONAL LAWS AND
-		REGULATIONS. TCP EXPRESSLY DISCLAIMS ANY AND ALL LIABILITY FOR
-		ANY CONSEQUENTIAL, INDIRECT, INCIDENTAL, SPECIAL OR EXEMPLARY
-		DAMAGES, INCLUDING WITHOUT LIMITATION ANY LOSS OF REVENUES OR
-		PROFITS OR ANY LOSS OF USE OF DATA, ARISING OUT OF OR CONNECTED
-		IN ANY WAY WITH ANY DIAGNOSTIC TESTING, MEDICAL TREATMENT,
-		VACCINATION OR OTHER HEALTHCARE INTERVENTION OR OTHERWISE
-		PROVIDED, SPONSORED, OR PROMOTED BY ANY CTN MEMBER, WHETHER
-		PROVIDED BY THE MEMBER ITSELF OR BY ITS AFFILIATES,
-		REPRESENTATIVES, AGENTS OR SUBCONTRACTORS.
+		<b>{t('disclaimer')}</b>{t('disclaimerDescription')}
 	  </div>
 	</div>
   );

@@ -1,44 +1,358 @@
 <!DOCTYPE html>
 <html>
   <head>
-
-    <title>SHC Reader Capture Window</title>
+    <title>Capture QR Code</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <script src='qr-scanner.umd.min.js'></script>
-	<script src="switchCamera.js"></script>
-
+    <script>
+      // Initialize switchCamera object before loading the script
+      window.sc = {
+        maybeShowSwitchCamera: function(qrScanner, elementId) {
+          try {
+            const element = document.getElementById(elementId);
+            if (element) {
+              element.style.display = 'block';
+            }
+          } catch (err) {
+            console.warn('Could not show switch camera button:', err);
+          }
+        },
+        switchCameraClick: function() {
+          try {
+            if (window.qrScanner) {
+              window.qrScanner.switchCamera();
+            }
+          } catch (err) {
+            console.warn('Could not switch camera:', err);
+          }
+        },
+        getSelectedCamera: function() { return 'environment'; }
+      };
+    </script>
+    <script src="switchCamera.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: #000;
+        box-sizing: border-box;
+      }
+      body {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background-color: #000;
+      }
+      .video-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+      #video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      #switchCamera {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        z-index: 1;
+      }
+      #switchCamera button {
+        background-color: rgba(0,0,0,0.5);
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+      #switchCamera button:hover {
+        background-color: rgba(0,0,0,0.7);
+      }
+      .scan-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0,0,0,0.3);
+      }
+      .scan-box {
+        width: 250px;
+        height: 250px;
+        border: 2px solid #fff;
+        position: relative;
+        transition: all 0.3s ease;
+      }
+      .scan-box::before,
+      .scan-box::after {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #fff;
+      }
+      .scan-box::before {
+        top: -2px;
+        left: -2px;
+        border-right: none;
+        border-bottom: none;
+      }
+      .scan-box::after {
+        bottom: -2px;
+        right: -2px;
+        border-left: none;
+        border-top: none;
+      }
+      .scan-line {
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background-color: #fff;
+        animation: scan 2s linear infinite;
+        box-shadow: 0 0 10px rgba(255,255,255,0.5);
+      }
+      .success-indicator {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: rgba(0,255,0,0.3);
+        display: none;
+        animation: pulse 1s ease-in-out;
+      }
+      @keyframes pulse {
+        0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+        50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
+        100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+      }
+      @keyframes scan {
+        0% { top: 0; opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { top: 100%; opacity: 0; }
+      }
+    </style>
   </head>
   <body>
-
-    <video id='video' style='width: 100%; max-width: 400px; height: auto;'></video>
-	<div id='switchCamera' style='display: none; margin-top: 8px;'>
-	  <button onclick='sc.switchCameraClick()'>Switch Camera</button>
-	</div>
+    <div class="video-container">
+      <video id='video'></video>
+      <div class="scan-overlay">
+        <div class="scan-box">
+          <div class="scan-line"></div>
+        </div>
+      </div>
+      <div id='switchCamera' style='display: none;'>
+        <button onclick='sc.switchCameraClick()'>Switch Camera</button>
+      </div>
+    </div>
   
     <script>
+      let qrScanner = null;
+      let scanTimeout = null;
+      const SCAN_TIMEOUT = 30000; // 30 seconds timeout
 
-	  const handleQR = (result) => {
-		window.opener.openCameraResult(result.data);
-		window.close();
-	  }
+      const handleQR = (result) => {
+        if (result && result.data) {
+          clearTimeout(scanTimeout);
+          try {
+            // Show success indicator
+            const scanBox = document.querySelector('.scan-box');
+            if (scanBox) {
+              const successIndicator = document.createElement('div');
+              successIndicator.className = 'success-indicator';
+              scanBox.appendChild(successIndicator);
+              successIndicator.style.display = 'block';
+            }
+            
+            // Close after a short delay to show the success indicator
+            setTimeout(() => {
+              window.opener.openCameraResult(result.data);
+              window.close();
+            }, 500);
+          } catch (err) {
+            console.warn('Error showing success indicator:', err);
+            window.opener.openCameraResult(result.data);
+            window.close();
+          }
+        }
+      }
 
-	  const hash = window.location.hash;
-	  const defaultMode = (hash ? hash.substring(1) : 'environment');
-	  
-	  const qrScanner = new QrScanner(
-		document.getElementById('video'),
-		handleQR,
-		{
-		  preferredCamera: sc.getSelectedCamera(defaultMode),
-		  highlightScanRegion: true,
-		  highlightCodeOutline: true,
-		  returnDetailedScanResult: true
-		});
+      const handleError = (error) => {
+        console.error('QR scan error:', error);
+        try {
+          const videoTrack = qrScanner._video.srcObject.getVideoTracks()[0];
+          if (videoTrack && videoTrack.getCapabilities().focusDistance) {
+            videoTrack.applyConstraints({
+              advanced: [{ focusMode: 'continuous' }]
+            }).catch(console.error);
+          }
+        } catch (err) {
+          console.warn('Error resetting focus:', err);
+        }
+      }
 
-	  qrScanner.start().then(() => {
-		sc.maybeShowSwitchCamera(qrScanner, 'switchCamera');
-	  });
-	  
+      const startScanTimeout = () => {
+        scanTimeout = setTimeout(() => {
+          window.opener.openCameraResult(null);
+          window.close();
+        }, SCAN_TIMEOUT);
+      }
+
+      const hash = window.location.hash;
+      const defaultMode = (hash ? hash.substring(1) : 'environment');
+      
+      async function initializeCamera() {
+        try {
+          qrScanner = new QrScanner(
+            document.getElementById('video'),
+            handleQR,
+            {
+              preferredCamera: sc.getSelectedCamera(defaultMode),
+              highlightScanRegion: true,
+              highlightCodeOutline: true,
+              returnDetailedScanResult: true,
+              maxScansPerSecond: 5,
+              onDecodeError: handleError,
+              calculateScanRegion: (video) => {
+                const smallestDimension = Math.min(video.videoWidth, video.videoHeight);
+                const scanRegionSize = Math.round(smallestDimension * 0.7);
+                return {
+                  x: Math.round((video.videoWidth - scanRegionSize) / 2),
+                  y: Math.round((video.videoHeight - scanRegionSize) / 2),
+                  width: scanRegionSize,
+                  height: scanRegionSize,
+                };
+              }
+            });
+
+          await qrScanner.start();
+          window.qrScanner = qrScanner; // Make scanner available globally
+          
+          // Safely handle camera switching
+          try {
+            sc.maybeShowSwitchCamera(qrScanner, 'switchCamera');
+          } catch (err) {
+            console.warn('Camera switching not available:', err);
+          }
+          
+          startScanTimeout();
+          
+          // Set initial focus constraints
+          const videoTrack = qrScanner._video.srcObject.getVideoTracks()[0];
+          if (videoTrack && videoTrack.getCapabilities().focusDistance) {
+            const capabilities = videoTrack.getCapabilities();
+            
+            // Set continuous auto-focus with initial focus
+            await videoTrack.applyConstraints({
+              advanced: [
+                { focusMode: 'continuous' },
+                { focusDistance: capabilities.focusDistance.max }
+              ]
+            });
+
+            // Add focus optimization based on QR code size
+            let lastFocusTime = 0;
+            const FOCUS_COOLDOWN = 1000; // 1 second cooldown between focus adjustments
+
+            qrScanner.$canvas.addEventListener('scan', async (event) => {
+              const result = event.detail;
+              if (result && result.location) {
+                const { topLeft, topRight, bottomRight, bottomLeft } = result.location;
+                const width = Math.max(
+                  Math.abs(topRight.x - topLeft.x),
+                  Math.abs(bottomRight.x - bottomLeft.x)
+                );
+                const height = Math.max(
+                  Math.abs(bottomLeft.y - topLeft.y),
+                  Math.abs(bottomRight.y - topRight.y)
+                );
+                
+                // Adjust focus based on QR code size with cooldown
+                const currentTime = Date.now();
+                if (currentTime - lastFocusTime > FOCUS_COOLDOWN) {
+                  const size = Math.max(width, height);
+                  try {
+                    if (size < 100) {
+                      // QR code is too small, increase focus distance
+                      await videoTrack.applyConstraints({
+                        advanced: [{ focusDistance: capabilities.focusDistance.max }]
+                      });
+                    } else if (size > 300) {
+                      // QR code is too large, decrease focus distance
+                      await videoTrack.applyConstraints({
+                        advanced: [{ focusDistance: capabilities.focusDistance.min }]
+                      });
+                    }
+                    lastFocusTime = currentTime;
+                  } catch (err) {
+                    console.error('Focus adjustment error:', err);
+                    // Reset focus on error
+                    await videoTrack.applyConstraints({
+                      advanced: [{ focusMode: 'continuous' }]
+                    });
+                  }
+                }
+              }
+            });
+          }
+
+          // Update scan box position based on QR code detection
+          qrScanner.$canvas.addEventListener('scan', (event) => {
+            const result = event.detail;
+            if (result && result.location) {
+              try {
+                const scanBox = document.querySelector('.scan-box');
+                if (scanBox) {
+                  const { topLeft, topRight, bottomRight, bottomLeft } = result.location;
+                  const width = Math.max(
+                    Math.abs(topRight.x - topLeft.x),
+                    Math.abs(bottomRight.x - bottomLeft.x)
+                  );
+                  const height = Math.max(
+                    Math.abs(bottomLeft.y - topLeft.y),
+                    Math.abs(bottomRight.y - topRight.y)
+                  );
+                  
+                  scanBox.style.width = `${width}px`;
+                  scanBox.style.height = `${height}px`;
+                  scanBox.style.transform = `translate(${topLeft.x}px, ${topLeft.y}px)`;
+                }
+              } catch (err) {
+                console.warn('Error updating scan box:', err);
+              }
+            }
+          });
+        } catch (err) {
+          console.error('Camera initialization error:', err);
+          window.opener.openCameraResult(null);
+          window.close();
+        }
+      }
+
+      // Start camera initialization
+      initializeCamera();
+
+      // Cleanup on window close
+      window.onbeforeunload = () => {
+        if (scanTimeout) {
+          clearTimeout(scanTimeout);
+        }
+        if (qrScanner) {
+          qrScanner.stop();
+          qrScanner.destroy();
+        }
+      };
     </script>
-
   </body>
 </html>

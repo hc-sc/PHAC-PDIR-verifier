@@ -106,14 +106,13 @@ export function renderPerson(person, resources) {
 function renderPersonResource(person) {
   // TODO - NOT COMPLETE - telecoms, etc.
 
-  const dob = (person.birthDate ? "DOB " + renderDate(person.birthDate) : "");
-  
-  return(
-    <div key={person.id}>
-	  {getPersonDisplayName(person.name[0])}<br/>
-	  {dob}
-	</div>
-  );
+
+  const dob = (person.birthDate ? person.birthDate : "");
+  const identifier = (person.identifier ? person.identifier[0].value : "");
+  const name = getPersonDisplayName(person.name[0]);
+
+
+  return {name, dob, identifier};
 }
 
 export function getPersonDisplayName(name) {
@@ -233,6 +232,18 @@ export function parseDateTime(d) {
 // | renderDate     |
 // | renderDateTime |
 // +----------------+
+
+export function renderAge(occurrenceDate, birthDate) {
+
+  const occurrence = new Date(occurrenceDate);
+  const birth = new Date(birthDate);
+
+
+  let years = Math.abs(occurrence.getFullYear() - birth.getFullYear());
+  let months = Math.abs(occurrence.getMonth() - birth.getMonth());
+
+  return { years, months };
+}
 
 export function renderDate(d) {
 

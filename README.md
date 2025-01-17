@@ -11,6 +11,8 @@ copied to complete structured input forms.
 
 Clone the repo and use `npm install` to cache dependencies.
 
+If it suggests to do a `npm audit fix` or `npm audit fix --force` after caching dependencies, suggest doing  `npm audit fix`. 
+
 Run the app in development mode using `HTTPS=true npm start`. HTTPS is required
 to use important features such as the camera and card validation.
 

@@ -25,11 +25,24 @@ function renderImmunizationGroup(
   dcr
 ) {
   const renderPatient = () => {
+
+    const patientInfo = futil.renderPerson(immunizations[0].patient, organized.byId);
+
     return (
-      <tr key={key}>
-        <th>Patient</th>
-        <td>{futil.renderPerson(immunizations[0].patient, organized.byId)}</td>
-      </tr>
+      <>
+        <tr key={key}>
+          <th>Patient Name</th>
+          <td>{patientInfo.name}</td>
+        </tr>
+        <tr key={key}>
+          <th>Date of Birth</th>
+          <td>{patientInfo.dob}</td>
+        </tr>
+        <tr key={key}>
+          <th>Unique Identifier</th>
+          <td>{patientInfo.identifier}</td>
+        </tr>
+      </>
     );
   };
 
@@ -48,23 +61,33 @@ function renderImmunizationGroup(
 
 	if (!performers) return(undefined);
 	
-    return (
-      <ul>
-        {performers.map((p, index) => (
-          <li key={index}>{p.actor.display}</li>
-        ))}
-      </ul>
-    );
-  };
+  return (
+    <ul>
+      {performers.map((p, index) => {
+        return (
+          <li key={index}>
+            {p.actor.display.split(',')[0]}
+          </li>
+        );
+      })}
+    </ul>
+  );
+};
   const renderImmunization = (immunization, key) => {
+    const patientInfo = futil.renderPerson(immunizations[0].patient, organized.byId);
+    const birthDate = patientInfo.dob;
+    const age = futil.renderAge(immunization.occurrenceDateTime, birthDate);
+
+
     return (
       <tr key={key}>
         <td>{immunization.occurrenceDateTime}</td>
+        <td>{age.years}Y {age.months}M</td>
         <td>{futil.renderCodeableJSX(immunization.vaccineCode, dcr)}</td>
         <td>{renderCodings(immunization.vaccineCode.coding)}</td>
         <td>{renderPerformers(immunization.performer)}</td>
         <td>{immunization.lotNumber}</td>
-        <td>{immunization.status}</td>
+        <td>{immunization.status ? immunization.status : ""}</td>
       </tr>
     );
   };
@@ -79,6 +102,7 @@ function renderImmunizationGroup(
     return (
       <tr>
         <th>Date Administered</th>
+        <th>At age</th>
         <th>Name</th>
         <th>Coding</th>
         <th>Performer</th>

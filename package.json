@@ -2,6 +2,7 @@
   "name": "shc-reader",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://hc-sc.github.io/PHAC-PDIR-verifier",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",

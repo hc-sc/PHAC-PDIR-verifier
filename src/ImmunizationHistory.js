@@ -87,7 +87,7 @@ function renderImmunizationGroup(
         <td>{renderCodings(immunization.vaccineCode.coding)}</td>
         <td>{renderPerformers(immunization.performer)}</td>
         <td>{immunization.lotNumber}</td>
-        <td>{immunization.status ? immunization.status : ""}</td>
+         {immunization.status && <td>{immunization.status}</td>}
       </tr>
     );
   };
@@ -107,7 +107,7 @@ function renderImmunizationGroup(
         <th>Coding</th>
         <th>Performer</th>
         <th>Lot Number</th>
-        <th>Status</th>
+          {immunizations[0].status && <th>Status</th>}
       </tr>
     );
   };

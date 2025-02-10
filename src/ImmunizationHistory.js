@@ -104,7 +104,7 @@ function renderImmunizationGroup(
         <th>Date Administered</th>
         <th>At age</th>
         <th>Name</th>
-        <th>Coding</th>
+        <th>SNOMED-CT</th>
         <th>Performer</th>
         <th>Lot Number</th>
           {immunizations[0].status && <th>Status</th>}

@@ -101,11 +101,11 @@ function renderImmunizationGroup(
   const renderImmunizationHeaders = () => {
     return (
       <tr>
-        <th>Date Administered</th>
+        <th>Date given</th>
         <th>At age</th>
-        <th>Name</th>
+        <th>Vaccine or antigen</th>
         <th>SNOMED-CT</th>
-        <th>Performer</th>
+        <th>Source jurisdiction</th>
         <th>Lot Number</th>
           {immunizations[0].status && <th>Status</th>}
       </tr>

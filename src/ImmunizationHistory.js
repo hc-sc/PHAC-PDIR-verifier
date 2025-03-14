@@ -31,15 +31,15 @@ function renderImmunizationGroup(
     return (
       <>
         <tr key={key}>
-          <th>Patient Name</th>
+          <th>Name (last, fist) / Nom (nom / prénom)</th>
           <td>{patientInfo.name}</td>
         </tr>
         <tr key={key}>
-          <th>Date of Birth</th>
+          <th>Date of birth <br></br> (Y-M-D) / Date de naissance (A-M-J)</th>
           <td>{patientInfo.dob}</td>
         </tr>
         <tr key={key}>
-          <th>Unique Identifier</th>
+          <th>Unique identifier / Identifiant unique</th>
           <td>{patientInfo.identifier}</td>
         </tr>
       </>
@@ -101,12 +101,12 @@ function renderImmunizationGroup(
   const renderImmunizationHeaders = () => {
     return (
       <tr>
-        <th>Date given</th>
-        <th>At age</th>
-        <th>Vaccine or antigen</th>
+        <th>Date given (Y-M-D) / Date d’administration  <br></br> (A-M-J)</th>
+        <th>At age / <br></br> Âge à l’administration</th>
+        <th>Vaccine or antigen / Vaccin ou  antigène</th>
         <th>SNOMED-CT</th>
-        <th>Source jurisdiction</th>
-        <th>Lot Number</th>
+        <th>Source jurisdiction / Juridiction de provenance</th>
+        <th>Lot number / Numéro de lot</th>
           {immunizations[0].status && <th>Status</th>}
       </tr>
     );

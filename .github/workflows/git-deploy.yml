@@ -24,7 +24,9 @@ jobs:
       # Clean and reinstall dependencies
       - name: Clean Dependencies
         run: |
-          rm -rf node_modules package-lock.json
+          rm -rf node_modules 
+          Remove-Item package-lock.json
+          npm cache clean --force
           npm install
 
       # Build the web app

@@ -26,7 +26,6 @@ jobs:
         run: |
           rm -rf node_modules package-lock.json
           npm install
-      
       # Build the web app
       - name: Build Web App
         run: npm run build

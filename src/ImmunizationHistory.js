@@ -38,10 +38,12 @@ function renderImmunizationGroup(
           <th>Date of birth <br></br> (Y-M-D) / Date de naissance (A-M-J)</th>
           <td>{patientInfo.dob}</td>
         </tr>
+        {patientInfo.identifier && (
         <tr key={key}>
           <th>Unique identifier / Identifiant unique</th>
           <td>{patientInfo.identifier}</td>
         </tr>
+      )}
       </>
     );
   };
@@ -73,29 +75,34 @@ function renderImmunizationGroup(
     </ul>
   );
 };
-  const renderImmunization = (immunization, key) => {
-    const patientInfo = futil.renderPerson(immunizations[0].patient, organized.byId);
-    const birthDate = patientInfo.dob;
-    const age = futil.renderAge(immunization.occurrenceDateTime, birthDate);
+const renderImmunization = (immunization, key) => {
+  const patientInfo = futil.renderPerson(immunizations[0].patient, organized.byId);
+  const birthDate = patientInfo.dob;
+  const age = futil.renderAge(immunization.occurrenceDateTime, birthDate);
+  const lotNumber = immunization.lotNumber === "N/A" ? "Unspecified" : immunization.lotNumber;
+  const sourceJurisdiction = immunization.performer.some((p) => p.actor.display === "N/A")
+      ? "Unspecified"
+      : renderPerformers(immunization.performer);
 
 
-    return (
-      <tr key={key}>
-        <td>{immunization.occurrenceDateTime}</td>
-        <td>{age.years}Y {age.months}M</td>
-        <td>{futil.renderCodeableJSX(immunization.vaccineCode, dcr)}</td>
-        <td>{renderCodings(immunization.vaccineCode.coding)}</td>
-        <td>{renderPerformers(immunization.performer)}</td>
-        <td>{immunization.lotNumber}</td>
-         {immunization.status && <td>{immunization.status}</td>}
-      </tr>
-    );
-  };
+  return (
+    <tr key={key}>
+      <td>{immunization.occurrenceDateTime}</td>
+      <td>{age.years}Y {age.months}M</td>
+      <td>{futil.renderCodeableJSX(immunization.vaccineCode, dcr)}</td>
+      <td>{renderCodings(immunization.vaccineCode.coding)}</td>
+      <td>{sourceJurisdiction}</td>
+      <td>{lotNumber}</td> 
+      {immunization.status && <td>{immunization.status}</td>}
+    </tr>
+  );
+};
+
 
   const renderImmunizations = () => {
     return immunizations
-      .sort((a, b) => a.occurrenceDateTime > b.occurrenceDateTime)
-      .map((i, index) => renderImmunization(i, index));
+    .sort((a, b) => new Date(b.occurrenceDateTime) - new Date(a.occurrenceDateTime))
+    .map((i, index) => renderImmunization(i, index));
   };
 
   const renderImmunizationHeaders = () => {

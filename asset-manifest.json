@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/PHAC-PDIR-verifier/static/css/main.fd87c060.css",
-    "main.js": "/PHAC-PDIR-verifier/static/js/main.f9a3d7a5.js",
+    "main.js": "/PHAC-PDIR-verifier/static/js/main.5946f280.js",
     "static/js/451.ee359ce3.chunk.js": "/PHAC-PDIR-verifier/static/js/451.ee359ce3.chunk.js",
     "static/js/903.01706582.chunk.js": "/PHAC-PDIR-verifier/static/js/903.01706582.chunk.js",
     "static/js/959.fb90e930.chunk.js": "/PHAC-PDIR-verifier/static/js/959.fb90e930.chunk.js",
@@ -38,7 +38,7 @@
     "static/media/open-sans-greek-ext-700-normal.woff2": "/PHAC-PDIR-verifier/static/media/open-sans-greek-ext-700-normal.8850c90c4b61e6472307.woff2",
     "index.html": "/PHAC-PDIR-verifier/index.html",
     "main.fd87c060.css.map": "/PHAC-PDIR-verifier/static/css/main.fd87c060.css.map",
-    "main.f9a3d7a5.js.map": "/PHAC-PDIR-verifier/static/js/main.f9a3d7a5.js.map",
+    "main.5946f280.js.map": "/PHAC-PDIR-verifier/static/js/main.5946f280.js.map",
     "451.ee359ce3.chunk.js.map": "/PHAC-PDIR-verifier/static/js/451.ee359ce3.chunk.js.map",
     "959.fb90e930.chunk.js.map": "/PHAC-PDIR-verifier/static/js/959.fb90e930.chunk.js.map",
     "644.92c1d1ad.chunk.js.map": "/PHAC-PDIR-verifier/static/js/644.92c1d1ad.chunk.js.map",
@@ -47,6 +47,6 @@
   },
   "entrypoints": [
     "static/css/main.fd87c060.css",
-    "static/js/main.f9a3d7a5.js"
+    "static/js/main.5946f280.js"
   ]
 }

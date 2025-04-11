@@ -31,7 +31,7 @@ function renderImmunizationGroup(
     return (
       <>
         <tr key={key}>
-          <th>Name (last, fist) / Nom (nom, prénom)</th>
+          <th>Name (last, first) / Nom (nom, prénom)</th>
           <td>{patientInfo.name}</td>
         </tr>
         <tr key={key}>

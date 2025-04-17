@@ -1,18 +1,379 @@
-
-.container {
-	display: grid;
-	grid-template-rows: 40px 1fr;
-	gap: 12px;
-	margin: 16px;
-	max-width: 1000px;
+.app {
+	min-height: 100vh;
+	background: linear-gradient(135deg, var(--background-light) 0%, var(--background-white) 100%);
+	position: relative;
+	overflow: hidden;
 }
 
-.nav {
-	grid-row: 1;
+.app::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: 
+		url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0c27.614 0 50 22.386 50 50S77.614 100 50 100 0 77.614 0 50 22.386 0 50 0zm0 10c22.091 0 40 17.909 40 40S72.091 90 50 90 10 72.091 10 50 27.909 10 50 10zm0 10c16.569 0 30 13.431 30 30S66.569 80 50 80 20 66.569 20 50 33.431 20 50 20z' fill='%231a73e8' fill-opacity='0.03'/%3E%3C/svg%3E") repeat,
+		url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0c16.569 0 30 13.431 30 30S46.569 60 30 60 0 46.569 0 30 13.431 0 30 0zm0 6c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24zm0 12c6.627 0 12 5.373 12 12s-5.373 12-12 12-12-5.373-12-12 5.373-12 12-12z' fill='%231a73e8' fill-opacity='0.02'/%3E%3C/svg%3E") repeat;
+	opacity: 0.5;
+	z-index: 0;
+}
+
+.app::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 4px;
+	background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+	z-index: 1;
 }
 
 .content {
-	grid-row: 2;
-	padding: 12px;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	z-index: 1;
+}
+
+/* Health Care Theme Colors */
+:root {
+	/* Primary Colors */
+	--primary-color: #2B579A;    /* Deep blue - trust, stability */
+	--secondary-color: #4A90E2;  /* Lighter blue - calm, reliability */
+	--accent-color: #50C878;     /* Emerald green - health, growth */
+	
+	/* Status Colors */
+	--success-color: #2E8B57;    /* Sea green - success, health */
+	--warning-color: #FFA500;    /* Orange - caution, attention */
+	--error-color: #DC143C;      /* Crimson - alert, important */
+	
+	/* Neutral Colors */
+	--text-primary: #2C3E50;     /* Dark blue-gray - readability */
+	--text-secondary: #5D6D7E;   /* Medium gray - secondary text */
+	--background-white: #FFFFFF; /* Pure white - clean, sterile */
+	--background-light: #F5F9FC; /* Light blue-gray - subtle background */
+	--border-color: #E0E7ED;     /* Light gray - subtle borders */
+	--primary-color: #1a73e8;
+	--secondary-color: #34a853;
+	--accent-color: #fbbc05;
+	--error-color: #ea4335;
+	--success-color: #0f9d58;
+	--warning-color: #fbbc05;
+	--text-primary: #202124;
+	--text-secondary: #5f6368;
+	--background-white: #ffffff;
+	--background-light: #f8f9fa;
+	--border-color: #dadce0;
+	--shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Common Card Styles */
+.card {
+	background: var(--background-white);
+	border-radius: 16px;
+	padding: 1.5rem;
+	margin: 1rem 0;
+	position: relative;
+	overflow: hidden;
+	box-shadow: 0 4px 12px var(--shadow-color);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 4px;
+	height: 100%;
+	background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+	border-radius: 2px;
+}
+
+.card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 6px 16px var(--shadow-color);
+}
+
+/* Common Button Styles */
+.button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	padding: 0.75rem 1.5rem;
+	border-radius: 12px;
+	font-size: 1rem;
+	font-weight: 500;
+	color: white;
+	background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+	border: none;
+	cursor: pointer;
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+	position: relative;
+	overflow: hidden;
+}
+
+.button::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+	opacity: 0;
+	transition: opacity 0.2s ease;
+}
+
+.button:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.button:hover::before {
+	opacity: 1;
+}
+
+/* Common Table Styles */
+.table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+	margin: 1rem 0;
+	background: var(--background-white);
+	border-radius: 16px;
+	overflow: hidden;
+	box-shadow: 0 4px 12px var(--shadow-color);
+}
+
+.table th {
+	background: var(--background-light);
+	color: var(--text-primary);
+	font-weight: 600;
+	padding: 1rem;
+	text-align: left;
+	border-bottom: 2px solid var(--border-color);
+	position: relative;
+}
+
+.table th::after {
+	content: '';
+	position: absolute;
+	bottom: -2px;
+	left: 0;
+	width: 100%;
+	height: 2px;
+	background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+	opacity: 0.5;
+}
+
+.table td {
+	padding: 1rem;
+	border-bottom: 1px solid var(--border-color);
+	color: var(--text-secondary);
+	transition: background-color 0.2s ease;
+}
+
+.table tr:last-child td {
+	border-bottom: none;
+}
+
+.table tr:hover td {
+	background: var(--background-light);
+}
+
+/* Status Indicators */
+.statusBadge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.5rem 1rem;
+	border-radius: 12px;
+	font-size: 0.875rem;
+	font-weight: 500;
+	position: relative;
+	overflow: hidden;
+}
+
+.statusBadge::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.1;
+	background: currentColor;
+}
+
+.statusBadge.valid {
+	color: var(--success-color);
+}
+
+.statusBadge.invalid {
+	color: var(--error-color);
+}
+
+.statusBadge.warning {
+	color: var(--warning-color);
+}
+
+/* Decorative Elements */
+.decorativeLine {
+	height: 2px;
+	background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+	margin: 1rem 0;
+	border-radius: 1px;
+}
+
+.decorativeDot {
+	width: 8px;
+	height: 8px;
+	background: var(--primary-color);
+	border-radius: 50%;
+	display: inline-block;
+	margin: 0 0.5rem;
+}
+
+/* Image Placeholders */
+.imagePlaceholder {
+	width: 100%;
+	height: 200px;
+	background: linear-gradient(135deg, var(--background-light), var(--background-white));
+	border-radius: 12px;
+	position: relative;
+	overflow: hidden;
+	margin-bottom: 1rem;
+}
+
+.imagePlaceholder::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(45deg, transparent 48%, var(--primary-color) 49%, var(--primary-color) 51%, transparent 52%);
+	opacity: 0.1;
+	animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+	0% { transform: translateX(-100%); }
+	100% { transform: translateX(100%); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+	.card {
+		padding: 1rem;
+		margin: 0.75rem 0;
+	}
+
+	.button {
+		padding: 0.625rem 1.25rem;
+		font-size: 0.875rem;
+	}
+
+	.table {
+		display: block;
+		overflow-x: auto;
+	}
+
+	.table th,
+	.table td {
+		padding: 0.75rem;
+	}
+
+	.imagePlaceholder {
+		height: 150px;
+	}
+}
+
+@media (max-width: 480px) {
+	.card {
+		padding: 0.75rem;
+		margin: 0.5rem 0;
+	}
+
+	.button {
+		padding: 0.5rem 1rem;
+		font-size: 0.75rem;
+	}
+
+	.table th,
+	.table td {
+		padding: 0.5rem;
+	}
+
+	.imagePlaceholder {
+		height: 120px;
+	}
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.nav {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 1rem;
+	background-color: #f8fafc;
+	border-bottom: 1px solid #e2e8f0;
+}
+
+.content {
+	flex: 1;
+	padding: 1rem;
+}
+
+.languageButton {
+	padding: 0.5rem 1rem;
+	margin-left: 1rem;
+	background-color: transparent;
+	border: 1px solid #e2e8f0;
+	border-radius: 4px;
+	color: #1e293b;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.2s;
+}
+
+.languageButton:hover {
+	background-color: #f1f5f9;
+}
+
+/* Material-UI Tabs Override */
+.nav :global(.MuiTabs-root) {
+	max-width: 100%;
+}
+
+.nav :global(.MuiTabs-flexContainer) {
+	justify-content: center;
+	gap: 1rem;
+}
+
+.nav :global(.MuiTab-root) {
+	min-width: auto;
+	padding: 0.5rem 1rem;
+	font-weight: 500;
+	color: var(--text-secondary);
+	transition: color 0.2s ease;
+}
+
+.nav :global(.MuiTab-root.Mui-selected) {
+	color: var(--primary-color);
+}
+
+.nav :global(.MuiTabs-indicator) {
+	background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
 }
 

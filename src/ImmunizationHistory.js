@@ -25,13 +25,12 @@ function renderImmunizationGroup(
   dcr
 ) {
   const renderPatient = () => {
-
     const patientInfo = futil.renderPerson(immunizations[0].patient, organized.byId);
 
     return (
       <>
         <tr key={key}>
-          <th>Name (last, first) / Nom (nom, prénom)</th>
+          <th>Name (last, fist) / Nom (nom, prénom)</th>
           <td>{patientInfo.name}</td>
         </tr>
         <tr key={key}>
@@ -39,11 +38,11 @@ function renderImmunizationGroup(
           <td>{patientInfo.dob}</td>
         </tr>
         {patientInfo.identifier && (
-        <tr key={key}>
-          <th>Unique identifier / Identifiant unique</th>
-          <td>{patientInfo.identifier}</td>
-        </tr>
-      )}
+          <tr key={key}>
+            <th>Unique identifier / Identifiant unique</th>
+            <td>{patientInfo.identifier}</td>
+          </tr>
+        )}
       </>
     );
   };
@@ -108,8 +107,8 @@ const renderImmunization = (immunization, key) => {
   const renderImmunizationHeaders = () => {
     return (
       <tr>
-        <th>Date given (Y-M-D) / Date d’administration  <br></br> (A-M-J)</th>
-        <th>At age / <br></br> Âge à l’administration</th>
+        <th>Date given (Y-M-D) / Date d'administration  <br></br> (A-M-J)</th>
+        <th>At age / <br></br> Âge à l'administration</th>
         <th>Vaccine or antigen / Vaccin ou  antigène</th>
         <th>SNOMED-CT</th>
         <th>Source jurisdiction / Juridiction de provenance</th>
@@ -120,7 +119,7 @@ const renderImmunization = (immunization, key) => {
   };
 
   return (
-    <table className={styles.dataTable}>
+    <table className={styles.immunizationTable}>
       <tbody>{renderPatient()}</tbody>
       <tbody>{renderImmunizationHeaders()}</tbody>
       <tbody>{renderImmunizations()}</tbody>

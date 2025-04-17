@@ -14,7 +14,7 @@ export const DEFAULT_CONFIG = {
   // updated for a production instance!
   "trustedDirectories": [
 	'https://raw.githubusercontent.com/the-commons-project/vci-directory/main/logs/vci_snapshot.json',
-	'https://raw.githubusercontent.com/seanno/shc-demo-data/main/keystore/directory.json'
+	'https://raw.githubusercontent.com/hc-sc/hc-pdir-vaccine-lookup-table/refs/heads/main/directory.json'
   ],
 
   // default camera mode ('environment' or 'user') or ID

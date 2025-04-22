@@ -90,8 +90,8 @@ export const languages = {
   fr: {
     // App.js
     aboutTab: 'À propos',
-    scanTab: 'Scanner la carte',
-    fileTab: 'Ouvrir un fichier',
+    scanTab: 'Numériser une carte',
+    fileTab: 'Ouvrir le fichier',
     photoTab: 'Prendre une photo',
     searchTab: 'Rechercher un dossier',
     dataTab: 'Détails de la carte',
@@ -103,12 +103,12 @@ export const languages = {
     scanDescription: 'Utilisez l\'appareil photo de votre appareil pour scanner un code QR de carte de santé SMART',
     photoDescription: 'Prenez une photo d\'un code QR de carte de santé SMART',
     fileDescription: 'Téléchargez un fichier contenant une carte de santé SMART',
-    aboutContent: 'Développée et maintenue par The Commons Project, cette application open source peut être utilisée de manière autonome ou intégrée dans un DSE pour lire les informations des cartes de santé SMART et des liens. Les types de données actuellement pris en charge incluent les cartes de vaccination COVID-19, les dossiers d\'immunisation généraux, les résumés de patients internationaux et les cartes d\'assurance maladie numériques.',
-    aboutContact: 'Si vous souhaitez héberger la visionneuse vous-même, contribuer à des fonctionnalités ou des corrections au projet, ou si vous avez d\'autres questions, veuillez contacter The Commons Project.',
-    aboutPrivacy: 'Les informations de santé personnelles sont traitées exclusivement dans le navigateur et ne sont jamais envoyées aux serveurs hébergeant la visionneuse.',
+    aboutContent: "Développée et maintenue par The Commons Project, cette application open source peut être utilisée de manière autonome ou intégrée dans un DSE pour lire les informations contenues dans les cartes de santé et les liens SMART. Les types de données pris en charge comprennent actuellement les cartes de vaccination contre la COVID-19, les dossiers généraux de vaccination, les résumés internationaux de dossiers de patients et les cartes numériques d'assurance maladie.",
+    aboutContact: "Si vous souhaitez héberger vous-même le lecteur, apporter des fonctionnalités ou des correctifs au projet, ou si vous avez d'autres questions, veuillez contacter The Commons Project. ",
+    aboutPrivacy: 'Les informations personnelles relatives à la santé sont traitées exclusivement dans le navigateur et ne sont jamais envoyées aux serveurs hébergeant le lecteur.',
 
     // Photo.js
-    captureTitle: 'Capturer le code QR de santé intelligent',
+    captureTitle: "Capturer l'image du code QR de santé Smart",
     cameraPaused: 'Caméra en pause',
     restartCamera: 'Redémarrer la caméra',
     openCamera: 'Ouvrir la caméra',
@@ -157,22 +157,22 @@ export const languages = {
 
     // File.js
     fileTitle: 'Ouvrir un fichier',
-    noFileChosen: 'Aucun fichier choisi',
-    fileDescription: 'Le visualiseur peut généralement lire les fichiers avec les extensions .smart-health-card ou .fhir.',
+    noFileChosen: 'Aucun fichier sélectionné',
+    fileDescription: "Le lecteur peut généralement lire les fichiers portant l'extension .smart-health-card ou .fhir.",
     chooseFile: 'Choisir un fichier',
     fileError: 'Erreur lors de la lecture du fichier. Veuillez réessayer.',
     invalidFile: 'Format de fichier invalide. Veuillez choisir un fichier de carte de santé SMART valide.',
 
     // Scan.js
-    scanTitle: 'Scannez un code QR de carte de santé SMART',
+    scanTitle: 'Numériser un code QR de santé Smart',
     scanDescription: 'Positionnez le code QR dans le cadre pour le scanner',
     scanError: 'Erreur lors du scan du code QR. Veuillez réessayer.',
     scanSuccess: 'Code QR scanné avec succès',
     readCode: 'Lire le code',
 
     // Buttons
-    saveToPDF: 'Enregistrer en PDF',
-    saveToFHIR: 'Enregistrer en FHIR',
+    saveToPDF: 'Sauvegarder au Format PDF',
+    saveToFHIR: 'Sauvegarder au Format FHIR',
     source: 'Source',
   }
 }; 

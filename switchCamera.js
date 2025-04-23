@@ -1,15 +1,16 @@
-
 // +--------------------------+
 // | sc.maybeShowSwitchCamera |
 // +--------------------------+
 
 async function maybeShowSwitchCamera(qrScanner, divId) {
-
-  const camIds = await listCameraIds();
-  if (camIds.length === 1) return;
-
-  window.sc._scanner = qrScanner;
-  document.getElementById(divId).style.display = 'block';
+  try {
+    const element = document.getElementById(divId);
+    if (element) {
+      element.style.display = 'block';
+    }
+  } catch (err) {
+    console.warn('Could not show switch camera button:', err);
+  }
 }
 
 // +--------------------+
@@ -17,9 +18,14 @@ async function maybeShowSwitchCamera(qrScanner, divId) {
 // | saveSelectedCamera |
 // +--------------------+
 
-function getSelectedCamera(defaultIdMode) {
-  const cached = localStorage.getItem('cameraIdMode');
-  return(cached || defaultIdMode);
+function getSelectedCamera(defaultMode) {
+  try {
+    const savedCamera = localStorage.getItem('selectedCamera');
+    return savedCamera || defaultMode;
+  } catch (err) {
+    console.warn('Could not get selected camera:', err);
+    return defaultMode;
+  }
 }
 
 function saveSelectedCamera(cameraIdMode) {
@@ -38,7 +44,13 @@ let switchTimer = undefined;
 const dblClickMillis = 250;
 
 async function switchCameraClick() {
-  switchCameraClickInternal(false);
+  try {
+    if (window.qrScanner) {
+      window.qrScanner.switchCamera();
+    }
+  } catch (err) {
+    console.warn('Could not switch camera:', err);
+  }
 }
 
 async function switchCameraClickInternal(isTimer) {

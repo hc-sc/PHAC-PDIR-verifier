@@ -69,10 +69,22 @@ export default function About({ setTab, tabValues }) {
         <div className={styles.section}>
           <h2 className={styles.sectionTitle}>{t('about')}</h2>
           <p className={styles.description}>
-            {t('aboutContent')}
+            {t('aboutContent')} 
+            <a href="https://www.thecommonsproject.org/">{t('aboutContent1')}</a>
+            {t('aboutContent2')}
+            <a href="https://github.com/the-commons-project/shc-web-reader">{t('aboutContent3')}</a>
+            {t('aboutContent4')}
+            <a href="https://smarthealth.cards/en/">{t('aboutContent5')}</a>
+            {t('aboutContent6')}
+            <a href="https://smarthealth.cards/en/find-my-issuer.html">{t('aboutContent7')}</a>
+            {t('aboutContent8')}
+            <a href="https://international-patient-summary.net/">{t('aboutContent9')}</a>
+            {t('aboutContent10')}
+            <br />
           </p>
           <p className={styles.description}>
             {t('aboutContact')}
+            <a href="https://www.thecommonsproject.org/">{t('aboutContact1')}</a>
           </p>
           <p className={styles.privacy}>{t('aboutPrivacy')}</p>
         </div>

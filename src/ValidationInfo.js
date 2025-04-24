@@ -1,8 +1,10 @@
 import { CERT_STATUS_VALID, CERT_STATUS_INVALID } from './lib/SHX.js';
 
 import styles from './ValidationInfo.module.css';
+import { useLanguage } from './lib/LanguageContext';
 
 export default function ValidationInfo({ bundle }) {
+const { t } = useLanguage();
 
   // +-------------+
   // | renderValid |
@@ -26,8 +28,7 @@ export default function ValidationInfo({ bundle }) {
 
 	return(
 	  <div className={styles.container}>
-		This card is <span className={styles.green}>valid</span> and
-		was issued by <b>{issuer}</b> on <b>{issueDate}</b>.
+		{t('validation1')} <span className={styles.green}>{t('validation2')}</span> {t('validation3')} <b>{issuer}</b> {t('validation4')} <b>{issueDate}</b>.
 		{revocationQualifier}
 	  </div>
 	);

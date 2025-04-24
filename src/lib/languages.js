@@ -110,6 +110,13 @@ export const languages = {
     
     // About.js
     about: 'About',
+
+    // ValidationInfo.js
+    validation1: 'This card is',
+    validation2: 'valid',
+    validation3: 'and was issued by',
+    validation4: 'on',
+
   },
   fr: {
     // App.js
@@ -223,5 +230,14 @@ export const languages = {
 
     // About.js
     about: 'À propos',
+
+    //Validation.js
+    validation1: 'Cette carte est',
+    validation2: 'valide',
+    validation3: 'et a été émise par le',
+    validation4: 'le',
+
+
+
   }
 }; 

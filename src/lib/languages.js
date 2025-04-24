@@ -92,7 +92,7 @@ export const languages = {
     scanError: 'Error scanning QR code. Please try again.',
     scanSuccess: 'QR code scanned successfully',
     readCode: 'Read Code',
-
+    scanTitle: 'Scan a Smart Health Card QR Code',
     // Buttons
     saveToPDF: 'Save to PDF',
     saveToFHIR: 'Save to FHIR',
@@ -141,7 +141,7 @@ export const languages = {
     aboutContact1:'The Commons Project.',
     aboutContact: "Si vous souhaitez héberger vous-même le lecteur, apporter des fonctionnalités ou des correctifs au projet, ou si vous avez d'autres questions, veuillez contacter ",
     aboutPrivacy: 'Les informations personnelles relatives à la santé sont traitées exclusivement dans le navigateur et ne sont jamais envoyées aux serveurs hébergeant le lecteur.',
-
+    
 
     // Photo.js
     captureTitle: "Capturer l'image du code QR de santé Smart",
@@ -204,6 +204,7 @@ export const languages = {
     scanError: 'Erreur lors du scan du code QR. Veuillez réessayer.',
     scanSuccess: 'Code QR scanné avec succès',
     readCode: 'Lire le code',
+    scanTitle: 'Numériser un code QR de santé Smart',
 
     // Buttons
     saveToPDF: 'Sauvegarder au Format PDF',

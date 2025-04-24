@@ -10,7 +10,7 @@ export const languages = {
 
     // About.js
     aboutTitle: 'SMART Health Card Viewer',
-    aboutSubtitle: 'View and verify SMART Health Cards and Links in your browser.',
+    aboutSubtitle: 'View SMART Health Cards and Links',
     getStarted: 'Get Started',
     scanDescriptionShort: 'Use your device\'s camera to scan a SMART Health Card QR code',
     photoDescriptionShort: 'Take a photo of a SMART Health Card QR code',
@@ -76,7 +76,6 @@ export const languages = {
     invalidFile: 'Invalid file format. Please choose a valid SMART Health Card file.',
 
     // Scan.js
-    scanTitle: 'Scan a Smart Health Card QR Code',
     scanDescription: 'Position the QR code within the frame to scan',
     scanError: 'Error scanning QR code. Please try again.',
     scanSuccess: 'QR code scanned successfully',
@@ -86,6 +85,9 @@ export const languages = {
     saveToPDF: 'Save to PDF',
     saveToFHIR: 'Save to FHIR',
     source: 'Source',
+    startScanningText: 'Start Scanning',
+    takePhotoText: 'Take Photo',
+    openFileText: 'Open file',
 
     // TCPFooter.js
     disclaimer: 'DISCLAIMER:',
@@ -107,13 +109,13 @@ export const languages = {
 
     // About.js
     aboutTitle: 'Visionneuse de cartes de santé SMART',
-    aboutSubtitle: 'Visualisez et vérifiez les cartes de santé SMART et les liens dans votre navigateur.',
+    aboutSubtitle: 'Lecture de carte de santé SMART et de liens SMART*',
     getStarted: 'Commencer',
     scanDescriptionShort: 'Utilisez l\'appareil photo de votre appareil pour scanner un code QR de carte de santé SMART',
     photoDescriptionShort: 'Prenez une photo d\'un code QR de carte de santé SMART',
     fileDescriptionShort: 'Téléchargez un fichier contenant une carte de santé SMART',
-    aboutContent: "Développée et maintenue par The Commons Project, cette application open source peut être utilisée de manière autonome ou intégrée dans un DSE pour lire les informations contenues dans les cartes de santé et les liens SMART. Les types de données pris en charge comprennent actuellement les cartes de vaccination contre la COVID-19, les dossiers généraux de vaccination, les résumés internationaux de dossiers de patients et les cartes numériques d'assurance maladie.",
-    aboutContact: "Si vous souhaitez héberger vous-même le lecteur, apporter des fonctionnalités ou des correctifs au projet, ou si vous avez d'autres questions, veuillez contacter The Commons Project. ",
+    aboutContent: "Développée et maintenue par The Commons Project, cette application open source peut être utilisée de manière autonome ou intégrée dans un DSE pour lire les informations contenues dans les cartes de santé et les liens SMART. Les types de données pris en charge comprennent actuellement les cartes de vaccination contre la COVID-19, les dossiers généraux de vaccination, les résumés internationaux de dossiers de patients et les cartes numériques d'assurance maladie. ",
+    aboutContact: "Si vous souhaitez héberger vous-même le lecteur, apporter des fonctionnalités ou des correctifs au projet, ou si vous avez d'autres questions, veuillez contacter The Commons Project. Les informations personnelles relatives à la santé sont traitées exclusivement dans le navigateur et ne sont jamais envoyées aux serveurs hébergeant le lecteur.",
     aboutPrivacy: 'Les informations personnelles relatives à la santé sont traitées exclusivement dans le navigateur et ne sont jamais envoyées aux serveurs hébergeant le lecteur.',
 
     // Photo.js
@@ -173,7 +175,6 @@ export const languages = {
     invalidFile: 'Format de fichier invalide. Veuillez choisir un fichier de carte de santé SMART valide.',
 
     // Scan.js
-    scanTitle: 'Numériser un code QR de santé Smart',
     scanDescription: 'Positionnez le code QR dans le cadre pour le scanner',
     scanError: 'Erreur lors du scan du code QR. Veuillez réessayer.',
     scanSuccess: 'Code QR scanné avec succès',
@@ -183,10 +184,13 @@ export const languages = {
     saveToPDF: 'Sauvegarder au Format PDF',
     saveToFHIR: 'Sauvegarder au Format FHIR',
     source: 'Source',
+    startScanningText: 'Démarrer la numérisation',
+    takePhotoText: 'Prendre une photo',
+    openFileText: 'Ouvrir le fichier',
 
     // TCPFooter.js
     disclaimer: 'DISCLAIMER:',
-    disclaimerDescription: "LA FONDATION COMMONS PROJECT (« TCP ») NE FOURNIT PAS DE CONSEILS MÉDICAUX ET N'ADMINISTRE PAS DE TESTS MÉDICAUX DIAGNOSTIQUES, DE VACCINS OU D'AUTRES INTERVENTIONS DE SANTÉ. LA TCP NE DONNE AUCUNE GARANTIE NI NE FAIT AUCUNE DÉCLARATION QUANT À L'ACCRÉDITATION, L'AUTORISATION D'EXERCER OU LA BONNE RÉPUTATION D'UN PRESTATAIRE DE SOINS DE SANTÉ EN VERTU DES LOIS ET RÉGLEMENTATIONS ÉTATIQUES, FÉDÉRALES, NATIONALES OU SUPRANATIONALES EN VIGUEUR. LE TCP DÉCLINE EXPRESSÉMENT TOUTE RESPONSABILITÉ EN CAS DE DOMMAGES CONSÉCUTIFS, INDIRECTS, ACCESSOIRES, SPÉCIAUX OU EXEMPLAIRES, Y COMPRIS, MAIS SANS S'Y LIMITER, TOUTE PERTE DE REVENUS OU DE BÉNÉFICES OU TOUTE PERTE D'UTILISATION DE DONNÉES, DÉCOULANT DE OU LIÉS DE QUELQUE MANIÈRE QUE CE SOIT À TOUT TEST DE DIAGNOSTIC, TRAITEMENT MÉDICAL, VACCINATION OU AUTRE INTERVENTION DE SOINS DE SANTÉ OU AUTREMENT FOURNI, PARRAINÉ OU PROMU PAR UN MEMBRE DU CTN, QU'IL SOIT FOURNI PAR LE MEMBRE LUI-MÊME OU PAR SES AFFILIÉS, SES REPRÉSENTANTS, SES AGENTS OU SES SOUS-TRAITANTS.",
+    disclaimerDescription: "CLAUSE DE NON-RESPONSABILITÉ : LA FONDATION COMMONS PROJECT (« TCP ») NE FOURNIT PAS DE CONSEILS MÉDICAUX ET N'ADMINISTRE PAS DE TESTS MÉDICAUX DIAGNOSTIQUES, DE VACCINS OU D'AUTRES INTERVENTIONS DE SANTÉ. LA TCP NE DONNE AUCUNE GARANTIE NI NE FAIT AUCUNE DÉCLARATION QUANT À L'ACCRÉDITATION, L'AUTORISATION D'EXERCER OU LA BONNE RÉPUTATION D'UN PRESTATAIRE DE SOINS DE SANTÉ EN VERTU DES LOIS ET RÉGLEMENTATIONS ÉTATIQUES, FÉDÉRALES, NATIONALES OU SUPRANATIONALES EN VIGUEUR. LE TCP DÉCLINE EXPRESSÉMENT TOUTE RESPONSABILITÉ EN CAS DE DOMMAGES CONSÉCUTIFS, INDIRECTS, ACCESSOIRES, SPÉCIAUX OU EXEMPLAIRES, Y COMPRIS, MAIS SANS S'Y LIMITER, TOUTE PERTE DE REVENUS OU DE BÉNÉFICES OU TOUTE PERTE D'UTILISATION DE DONNÉES, DÉCOULANT DE OU LIÉS DE QUELQUE MANIÈRE QUE CE SOIT À TOUT TEST DE DIAGNOSTIC, TRAITEMENT MÉDICAL, VACCINATION OU AUTRE INTERVENTION DE SOINS DE SANTÉ OU AUTREMENT FOURNI, PARRAINÉ OU PROMU PAR UN MEMBRE DU CTN, QU'IL SOIT FOURNI PAR LE MEMBRE LUI-MÊME OU PAR SES AFFILIÉS, SES REPRÉSENTANTS, SES AGENTS OU SES SOUS-TRAITANTS.",
     privacyPolicy: 'Politique sur la vie privée du site internet',
     termsOfService: 'Termes et conditions',
     // About.js

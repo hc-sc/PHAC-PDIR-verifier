@@ -37,21 +37,21 @@ export default function About({ setTab, tabValues }) {
               <div className={styles.feature}>
                 <h3 className={styles.featureTitle}>{t('scanTab')}</h3>
                 <p className={styles.featureDescription}>{t('scanDescriptionShort')}</p>
-                {renderTabButton(tabValues.Scan, "Start Scanning")}
+                {renderTabButton(tabValues.Scan, t('startScanningText'))}
               </div>
             )}
             {config("showPhoto") && (
               <div className={styles.feature}>
                 <h3 className={styles.featureTitle}>{t('photoTab')}</h3>
                 <p className={styles.featureDescription}>{t('photoDescriptionShort')}</p>
-                {renderTabButton(tabValues.Photo, "Take Photo")}
+                {renderTabButton(tabValues.Photo, t('takePhotoText'))}
               </div>
             )}
             {config("showFile") && (
               <div className={styles.feature}>
                 <h3 className={styles.featureTitle}>{t('fileTab')}</h3>
                 <p className={styles.featureDescription}>{t('fileDescriptionShort')}</p>
-                {renderTabButton(tabValues.File, "Open File")}
+                {renderTabButton(tabValues.File, t('openFileText'))}
               </div>
             )}
             {fhir && config("showSearch") && (

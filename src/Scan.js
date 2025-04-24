@@ -22,7 +22,7 @@ export default function Scan({ viewData }) {
 
   return (
     <div>
-      <h1>{t('scanTitle')}</h1>
+      <h1>{t('captureTitle')}</h1>
 
       <TextField variant='outlined'
                  rows={6}

@@ -8,6 +8,9 @@ const { t } = useLanguage();
   return (
 	<div className={styles.container}>
 	  <div>
+	  <p className={styles.description}>
+            {t('linksDislaimer')} 
+          </p>
 		<a href="https://www.commonhealth.org/website-privacy-policy">{t('privacyPolicy')}</a>
 		&nbsp;|&nbsp;
 		<a href="https://www.commonhealth.org/terms">{t('termsOfService')}</a>

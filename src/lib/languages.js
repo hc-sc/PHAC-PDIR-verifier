@@ -15,8 +15,20 @@ export const languages = {
     scanDescriptionShort: 'Use your device\'s camera to scan a SMART Health Card QR code',
     photoDescriptionShort: 'Take a photo of a SMART Health Card QR code',
     fileDescriptionShort: 'Upload a file containing a SMART Health Card',
-    aboutContent: 'Developed and maintained by The Commons Project, this open source application can be used standalone or embedded within an EHR to read information in SMART Health Cards and Links. Supported data types currently include COVID-19 vaccine cards, general immunization records, International Patient Summaries, and Digital Health Insurance Cards.',
-    aboutContact: 'If you would like to host the viewer yourself, contribute features or fixes to the project, or have any other questions, please contact The Commons Project.',
+  
+    aboutContent: 'Developed and maintained by ',
+    aboutContent1:'The Commons Project',
+    aboutContent2:', this ',
+    aboutContent3: 'open source application',
+    aboutContent4: ' can be used standalone or embedded within an EHR to read information in ',
+    aboutContent5:'SMART Health Cards and Links.',
+    aboutContent6:' Supported data types currently include ', 
+    aboutContent7:'COVID-19 vaccine cards,',
+    aboutContent8:' general immunization records, ', 
+    aboutContent9:'International Patient Summaries,', 
+    aboutContent10:' and Digital Health Insurance Cards. ',
+    aboutContact: 'If you would like to host the viewer yourself, contribute features or fixes to the project, or have any other questions, please contact ',
+    aboutContact1:'The Commons Project.',
     aboutPrivacy: 'Personal health information is processed exclusively in the browser and is never sent to the servers hosting the viewer.',
 
     // Photo.js

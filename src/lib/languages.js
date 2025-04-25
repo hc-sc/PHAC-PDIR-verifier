@@ -122,7 +122,7 @@ export const languages = {
     // App.js
     aboutTab: 'À propos',
     scanTab: 'Numériser une carte',
-    fileTab: 'Ouvrir le fichier',
+    fileTab: 'Ouvrir un fichier',
     photoTab: 'Prendre une photo',
     searchTab: 'Rechercher un dossier',
     dataTab: 'Détails de la carte',
@@ -219,7 +219,7 @@ export const languages = {
     source: 'Source',
     startScanningText: 'Commencer à numériser',
     takePhotoText: 'Prendre une photo',
-    openFileText: 'Ouvrir le fichier',
+    openFileText: 'Ouvrir un fichier',
 
     // TCPFooter.js
     disclaimer: 'CLAUSE DE NON-RESPONSABILITÉ:',

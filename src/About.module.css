@@ -50,7 +50,6 @@
 	transform: translateX(-50%);
 	width: 60px;
 	height: 60px;
-	background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0c16.569 0 30 13.431 30 30S46.569 60 30 60 0 46.569 0 30 13.431 0 30 0zm0 6c-13.255 0-24 10.745-24 24s10.745 24 24 24 24-10.745 24-24-10.745-24-24-24zm0 12c6.627 0 12 5.373 12 12s-5.373 12-12 12-12-5.373-12-12 5.373-12 12-12z' fill='%231a73e8' fill-opacity='0.1'/%3E%3C/svg%3E") no-repeat center;
 	opacity: 0.5;
 }
 

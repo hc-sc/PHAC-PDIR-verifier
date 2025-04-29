@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Tab, Tabs, Button } from '@mui/material';
 import About from './About.js';
-import Scan from './Scan.js';
 import File from './File.js';
 import Photo from './Photo.js';
 import Search from './Search.js';

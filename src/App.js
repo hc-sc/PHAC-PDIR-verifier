@@ -50,7 +50,7 @@ function AppContent() {
         <Tabs
           value={tabValue}
           onChange={handleTabChange}
-          orientation='verticle'
+          orientation='horizontal'
           variant='scrollable'
           scrollButtons="auto"
           allowScrollButtonsMobile

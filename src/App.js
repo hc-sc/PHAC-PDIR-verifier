@@ -52,8 +52,7 @@ function AppContent() {
           onChange={handleTabChange}
           orientation='horizontal'
           variant='scrollable'
-          scrollButtons="auto"
-          allowScrollButtonsMobile
+
         >
           <Tab label={t('aboutTab')} value={TabValue.About} />
           {config("showFile") && <Tab label={t('fileTab')} value={TabValue.File} />}

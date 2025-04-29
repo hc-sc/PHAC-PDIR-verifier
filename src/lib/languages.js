@@ -2,9 +2,8 @@ export const languages = {
   en: {
     // App.js
     aboutTab: 'About',
-    scanTab: 'Scan Card',
     fileTab: 'Open File',
-    photoTab: 'Take Photo',
+    photoTab: 'Use your camera',
     searchTab: 'Search Record',
     dataTab: 'Card Details',
 
@@ -12,8 +11,7 @@ export const languages = {
     aboutTitle: 'SMART Health Card Viewer',
     aboutSubtitle: 'View SMART Health Cards and Links',
     getStarted: 'Get Started',
-    scanDescriptionShort: 'Use your device\'s camera to scan a SMART Health Card QR code',
-    photoDescriptionShort: 'Take a photo of a SMART Health Card QR code',
+    photoDescriptionShort: 'Start scanning using your camera',
     fileDescriptionShort: 'Upload a file containing a SMART Health Card',
   
     aboutContent: 'This viewer is a modification of the ',
@@ -96,8 +94,7 @@ export const languages = {
     saveToPDF: 'Save to PDF',
     saveToFHIR: 'Save to FHIR',
     source: 'Source',
-    startScanningText: 'Start Scanning',
-    takePhotoText: 'Take Photo',
+    takePhotoText: 'Use your camera',
     openFileText: 'Open file',
 
     // TCPFooter.js
@@ -120,9 +117,8 @@ export const languages = {
   fr: {
     // App.js
     aboutTab: 'À propos',
-    scanTab: 'Numériser une carte',
     fileTab: 'Ouvrir un fichier',
-    photoTab: 'Prendre une photo',
+    photoTab: 'Utiliser votre caméra',
     searchTab: 'Rechercher un dossier',
     dataTab: 'Détails de la carte',
 
@@ -130,8 +126,7 @@ export const languages = {
     aboutTitle: 'Lecteur de carte de santé SMART',
     aboutSubtitle: 'Lit et vérifie les cartes de santé SMART et les liens dans votre navigateur',
     getStarted: 'Débuter',
-    scanDescriptionShort: 'Positionnez le code QR dans le cadre pour numériser',
-    photoDescriptionShort: 'Prendre en photo le code QR d’une carte de santé SMART',
+    photoDescriptionShort: 'Commencer à numériser en utilisant votre caméra Numériser',
     fileDescriptionShort:  "Le lecteur peut généralement lire les fichiers portant l'extension .smart-health-card ou .fhir.",
     aboutContent: 'Ce lecteur est une modification du ',
     aboutContent1:'lecteur de carte de santé SMART',
@@ -215,7 +210,7 @@ export const languages = {
     saveToFHIR: 'Sauvegarder au Format FHIR',
     source: 'Source',
     startScanningText: 'Commencer à numériser',
-    takePhotoText: 'Prendre une photo',
+    takePhotoText: 'Utiliser votre caméra',
     openFileText: 'Ouvrir un fichier',
 
     // TCPFooter.js

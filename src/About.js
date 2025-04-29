@@ -33,13 +33,6 @@ export default function About({ setTab, tabValues }) {
         <div className={styles.section}>
           <h2 className={styles.sectionTitle}>{t('getStarted')}</h2>
           <div className={styles.features}>
-            {config("showScan") && (
-              <div className={styles.feature}>
-                <h3 className={styles.featureTitle}>{t('scanTab')}</h3>
-                <p className={styles.featureDescription}>{t('scanDescriptionShort')}</p>
-                {renderTabButton(tabValues.Scan, t('startScanningText'))}
-              </div>
-            )}
             {config("showPhoto") && (
               <div className={styles.feature}>
                 <h3 className={styles.featureTitle}>{t('photoTab')}</h3>

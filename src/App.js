@@ -15,7 +15,6 @@ import styles from './App.module.css';
 
 const TabValue = {
   About: 'about',
-  Scan: 'scan',
   File: 'file',
   Photo: 'photo',
   Search: 'search',
@@ -56,7 +55,6 @@ function AppContent() {
           variant='scrollable'
         >
           <Tab label={t('aboutTab')} value={TabValue.About} />
-          {config("showScan") && <Tab label={t('scanTab')} value={TabValue.Scan} />}
           {config("showFile") && <Tab label={t('fileTab')} value={TabValue.File} />}
           {config("showPhoto") && <Tab label={t('photoTab')} value={TabValue.Photo} />}
           {fhir && config("showSearch") && <Tab label={t('searchTab')} value={TabValue.Search} />}
@@ -72,7 +70,6 @@ function AppContent() {
 
       <div className={styles.content}>
         {tabValue === TabValue.About && <About setTab={setTab} tabValues={TabValue} />}
-        {tabValue === TabValue.Scan && <Scan viewData={viewData} />}
         {tabValue === TabValue.File && <File viewData={viewData} />}
         {tabValue === TabValue.Photo && <Photo viewData={viewData} />}
         {tabValue === TabValue.Search && <Search viewData={viewData} />}

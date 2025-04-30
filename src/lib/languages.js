@@ -105,7 +105,7 @@ export const languages = {
     termsOfService: 'Terms of Service',
     
     // About.js
-    about: 'About',
+    about: 'About test hello',
 
     // ValidationInfo.js
     validation1: 'This card is',

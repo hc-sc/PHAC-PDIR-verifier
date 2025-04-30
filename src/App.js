@@ -52,6 +52,8 @@ function AppContent() {
           onChange={handleTabChange}
           orientation='horizontal'
           variant='scrollable'
+          scrollButtons='auto'
+          allowScrollButtonsMobile
 
         >
           <Tab label={t('aboutTab')} value={TabValue.About} />

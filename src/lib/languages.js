@@ -94,7 +94,7 @@ export const languages = {
     saveToPDF: 'Save to PDF',
     saveToFHIR: 'Save to FHIR',
     source: 'Source',
-    takePhotoText: 'Use your camera',
+    takePhotoText: 'Scan',
     openFileText: 'Open file',
 
     // TCPFooter.js
@@ -126,7 +126,7 @@ export const languages = {
     aboutTitle: 'Lecteur de carte de santé SMART',
     aboutSubtitle: 'Lit et vérifie les cartes de santé SMART et les liens dans votre navigateur',
     getStarted: 'Débuter',
-    photoDescriptionShort: 'Commencer à numériser en utilisant votre caméra Numériser',
+    photoDescriptionShort: 'Commencer à numériser en utilisant votre caméra',
     fileDescriptionShort:  "Le lecteur peut généralement lire les fichiers portant l'extension .smart-health-card ou .fhir.",
     aboutContent: 'Ce lecteur est une modification du ',
     aboutContent1:'lecteur de carte de santé SMART',
@@ -210,7 +210,7 @@ export const languages = {
     saveToFHIR: 'Sauvegarder au Format FHIR',
     source: 'Source',
     startScanningText: 'Commencer à numériser',
-    takePhotoText: 'Utiliser votre caméra',
+    takePhotoText: 'Numériser',
     openFileText: 'Ouvrir un fichier',
 
     // TCPFooter.js

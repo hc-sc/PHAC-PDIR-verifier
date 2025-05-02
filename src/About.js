@@ -63,15 +63,15 @@ export default function About({ setTab, tabValues }) {
           <h2 className={styles.sectionTitle}>{t('about')}</h2>
           <p className={styles.description}>
             {t('aboutContent')} 
-            <a href="https://viewer.commonhealth.org/">{t('aboutContent1')}</a>
+            <a href="https://viewer.commonhealth.org/" target="_blank" rel="noopener noreferrer">{t('aboutContent1')}</a>
             {t('aboutContent2')}
-            <a href="https://github.com/the-commons-project/shc-web-reader">{t('aboutContent3')}</a>
+            <a href="https://github.com/the-commons-project/shc-web-reader" target="_blank" rel="noopener noreferrer">{t('aboutContent3')}</a>
             {t('aboutContent4')}
-            <a href="https://www.thecommonsproject.org/">{t('aboutContent5')}</a>
+            <a href="https://www.thecommonsproject.org/" target="_blank" rel="noopener noreferrer">{t('aboutContent5')}</a>
             {t('aboutContent6')}
-            <a href="https://smarthealth.cards/en/">{t('aboutContent7')}</a>
+            <a href="https://smarthealth.cards/en/" target="_blank" rel="noopener noreferrer">{t('aboutContent7')}</a>
             {t('aboutContent8')}
-            <a href="https://spec.smarthealth.cards/">{t('aboutContent9')}</a>
+            <a href="https://spec.smarthealth.cards/" target="_blank" rel="noopener noreferrer">{t('aboutContent9')}</a>
             {t('aboutContent10')}
             <br />
           </p>

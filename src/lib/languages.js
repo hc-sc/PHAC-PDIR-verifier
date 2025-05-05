@@ -29,7 +29,7 @@ export const languages = {
     aboutPrivacy: 'Personal health information is processed exclusively in the browser and is never sent to the servers hosting the viewer.',
 
     // Photo.js
-    captureTitle: 'Capture Smart Health QR Code Image',
+    captureTitle: 'Capture SMART Health QR Code image',
     cameraPaused: 'Camera paused',
     restartCamera: 'Restart Camera',
     openCamera: 'Open Camera',
@@ -143,7 +143,7 @@ export const languages = {
     
 
     // Photo.js
-    captureTitle: "Capturer l'image du code QR de santé Smart",
+    captureTitle: "Capturer l'image du code QR de carte santé SMART",
     cameraPaused: 'Caméra en pause',
     restartCamera: 'Redémarrer la caméra',
     openCamera: 'Ouvrir la caméra',
@@ -152,7 +152,7 @@ export const languages = {
     invalidQrCode: 'Format de code QR invalide. Veuillez scanner un code QR de carte de santé valide.',
     qrCodeError: 'Erreur lors du traitement du code QR. Veuillez réessayer.',
     cameraError: 'Échec du démarrage de la caméra. Veuillez réessayer.',
-    cameraTimeout: 'Session de la caméra expirée. Veuillez redémarrer la caméra.',
+    cameraTimeout: 'La session de la caméra est écoulée. Veuillez redémarrer votre caméra.',
 
     // ValidationInfo.js
     validationTitle: 'Informations de validation',

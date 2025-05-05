@@ -9,7 +9,7 @@ export const languages = {
 
     // About.js
     aboutTitle: 'SMART Health Card Viewer',
-    aboutSubtitle: 'View SMART Health Cards and Links',
+    aboutSubtitle: 'View SMART Health Cards',
     getStarted: 'Get Started',
     photoDescriptionShort: 'Start scanning using your camera',
     fileDescriptionShort: 'Upload a file containing a SMART Health Card',
@@ -124,7 +124,7 @@ export const languages = {
 
     // About.js
     aboutTitle: 'Lecteur de carte de santé SMART',
-    aboutSubtitle: 'Lit et vérifie les cartes de santé SMART et les liens dans votre navigateur',
+    aboutSubtitle: 'Lit et vérifie les cartes de santé SMART',
     getStarted: 'Débuter',
     photoDescriptionShort: 'Commencer à numériser en utilisant votre caméra',
     fileDescriptionShort:  "Le lecteur peut généralement lire les fichiers portant l'extension .smart-health-card ou .fhir.",

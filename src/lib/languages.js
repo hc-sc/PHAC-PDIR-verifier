@@ -112,6 +112,8 @@ export const languages = {
     validation2: 'valid',
     validation3: 'and was issued by',
     validation4: 'on',
+    invalidValidation: 'invalid',
+
 
   },
   fr: {
@@ -170,6 +172,7 @@ export const languages = {
     statusInvalid: 'Statut invalide',
     dateValid: 'Date valide',
     dateInvalid: 'Date invalide',
+    invalidValidation: 'invalide',
 
     // PatientSummary.js
     patientInfo: 'Informations du patient',

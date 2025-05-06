@@ -44,7 +44,7 @@ const { t } = useLanguage();
 	
 	return(
 	  <div className={styles.container}>
-		This card is <span className={styles.red}>invalid</span>.
+		{t('validation1')} <span className={styles.red}>{t('invalidValidation')}</span>.
 		<ul>{reasons}</ul>
 	  </div>
 	);

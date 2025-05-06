@@ -239,6 +239,14 @@ export default function Photo({ viewData }) {
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [haveCamera, paused, viewData, t]);
 
+  useEffect(() => {
+    if (paused) {
+      setError(t('cameraTimeout'));
+    } else {
+      setError(null);
+    }
+  }, [paused, t]);
+  
   return (
     <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
       <h1>{t('captureTitle')}</h1>

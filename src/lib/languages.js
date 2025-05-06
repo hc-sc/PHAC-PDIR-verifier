@@ -29,7 +29,7 @@ export const languages = {
     aboutPrivacy: 'Personal health information is processed exclusively in the browser and is never sent to the servers hosting the viewer.',
 
     // Photo.js
-    captureTitle: 'Capture SMART Health QR Code image',
+    captureTitle: 'Capture SMART Health card QR Code image',
     cameraPaused: 'Camera paused',
     restartCamera: 'Restart Camera',
     openCamera: 'Open Camera',

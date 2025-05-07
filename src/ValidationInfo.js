@@ -18,7 +18,7 @@ export default function ValidationInfo({ bundle }) {
 				  href={bundle.issuerURL}>{issuer}</a>;
 	}
 
-  const issueDate = bundle.issueDate.toLocaleString(currentLanguage === 'fr' ? 'fr-FR' : 'en-US', {
+  const issueDate = bundle.issueDate.toLocaleString(currentLanguage === 'fr' ? 'fr-CA' : 'en-US', {
     month: 'long', day: 'numeric', year: 'numeric'
   });
   

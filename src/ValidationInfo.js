@@ -41,7 +41,16 @@ export default function ValidationInfo({ bundle }) {
   
   const renderInvalid = () => {
 
-	const reasons = bundle.reasons.map(r => <li key={r}>{r}</li>);
+  const reasons = bundle.reasons.map(r => (
+    <li key={r}>
+       {currentLanguage === 'fr' 
+        ? (r === 'bad-signature' ? 'Mauvaise signature' : r === 'failed-validation' ? 'Validation échouée' : r) 
+        : r}
+    </li>
+  ));
+    
+    
+    
 	
 	return(
 	  <div className={styles.container}>

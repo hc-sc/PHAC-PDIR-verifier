@@ -4,7 +4,7 @@ import styles from './ValidationInfo.module.css';
 import { useLanguage } from './lib/LanguageContext';
 
 export default function ValidationInfo({ bundle }) {
-const { t } = useLanguage();
+  const { t, currentLanguage } = useLanguage();
 
   // +-------------+
   // | renderValid |
@@ -18,15 +18,19 @@ const { t } = useLanguage();
 				  href={bundle.issuerURL}>{issuer}</a>;
 	}
 
-	const issueDate = bundle.issueDate.toLocaleString('en-US', {
-	  month: 'long', day: 'numeric', year: 'numeric' });
-
-	const revocationQualifier = null;
+  const issueDate = bundle.issueDate.toLocaleString(currentLanguage === 'fr' ? 'fr-FR' : 'en-US', {
+    month: 'long', day: 'numeric', year: 'numeric'
+  });
   
+
+  const revocationQualifier = 
+            (bundle.supportsRevocation ? '' :
+              <> Because this issuer does not support revocation,
+                details may have changed since that time.</>);
+
 	return(
 	  <div className={styles.container}>
 		{t('validation1')} <span className={styles.green}>{t('validation2')}</span> {t('validation3')} <b>{issuer}</b> {t('validation4')} <b>{issueDate}</b>.
-		{revocationQualifier}
 	  </div>
 	);
   }

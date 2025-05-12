@@ -238,7 +238,7 @@ export default function Photo({ viewData }) {
     };
     
     checkCameraAccess();
-  }, [haveCamera, paused, viewData, t]);
+  }, [haveCamera, paused, viewData, t, pauseCamera]);
 
   useEffect(() => {
     if (paused) {

@@ -23,10 +23,10 @@ export default function ValidationInfo({ bundle }) {
   });
   
 
-  const revocationQualifier = 
-            (bundle.supportsRevocation ? '' :
-              <> Because this issuer does not support revocation,
-                details may have changed since that time.</>);
+  // const revocationQualifier = 
+  //           (bundle.supportsRevocation ? '' :
+  //             <> Because this issuer does not support revocation,
+  //               details may have changed since that time.</>);
 
 	return(
 	  <div className={styles.container}>

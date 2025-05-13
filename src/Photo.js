@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, CircularProgress, Alert } from '@mui/material';
 import config from './lib/config.js';
 import QrScanner from 'qr-scanner';
@@ -58,13 +58,14 @@ export default function Photo({ viewData }) {
     }
   };
 
-  const pauseCamera = useCallback(() => { 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const pauseCamera = () => { 
     setPaused(true);
     setError(t('cameraTimeout'));
     if (qrScanner) {
       qrScanner.stop();
     }
-  }, [qrScanner, t]);
+  };
 
   const handleFocus = (event) => {
     console.log('Tap detected!', {

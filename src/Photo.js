@@ -156,7 +156,15 @@ export default function Photo({ viewData }) {
   
         stream.getTracks().forEach(track => track.stop());
         setError(null);
-        
+      } catch (err) {
+        console.error('Camera access error:', err);
+        setHaveCamera(false);
+        setError(t('cameraAccessDenied'));
+        return;
+      }
+    };
+    
+      checkCameraAccess();
   
         const videoElement = document.getElementById('video');
         if (!videoElement) return;
@@ -230,16 +238,9 @@ export default function Photo({ viewData }) {
           scanner.destroy();
         };
         //eslint-disable-next-line react-hooks/exhaustive-deps
-      } catch (err) {
-        console.error('Camera access error:', err);
-        setHaveCamera(false);
-        setError(t('cameraAccessDenied'));
-        return;
-      }
-    };
+
     
-    checkCameraAccess();
-  }, [haveCamera, paused, viewData, t, pauseCamera]);
+  }, [haveCamera, paused, viewData, t]);
 
   useEffect(() => {
     if (paused) {

@@ -237,9 +237,8 @@ export default function Photo({ viewData }) {
           scanner.stop();
           scanner.destroy();
         };
-        //eslint-disable-next-line react-hooks/exhaustive-deps
-
-    
+        
+     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [haveCamera, paused, viewData, t]);
 
   useEffect(() => {

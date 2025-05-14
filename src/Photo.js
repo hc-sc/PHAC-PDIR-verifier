@@ -239,7 +239,7 @@ export default function Photo({ viewData }) {
         };
         
      //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [haveCamera, paused, viewData, t]);
+  }, [haveCamera, paused]);
 
   useEffect(() => {
     if (paused) {

@@ -9,7 +9,7 @@ export const languages = {
 
     // About.js
     aboutTitle: 'SMART Health Card Viewer',
-    aboutSubtitle: 'View SMART Health Cards and Links',
+    aboutSubtitle: 'View SMART Health Cards',
     getStarted: 'Get Started',
     photoDescriptionShort: 'Start scanning using your camera',
     fileDescriptionShort: 'Upload a file containing a SMART Health Card',
@@ -29,7 +29,7 @@ export const languages = {
     aboutPrivacy: 'Personal health information is processed exclusively in the browser and is never sent to the servers hosting the viewer.',
 
     // Photo.js
-    captureTitle: 'Capture Smart Health QR Code Image',
+    captureTitle: 'Capture SMART Health card QR Code image',
     cameraPaused: 'Camera paused',
     restartCamera: 'Restart Camera',
     openCamera: 'Open Camera',
@@ -98,7 +98,7 @@ export const languages = {
     openFileText: 'Open file',
 
     // TCPFooter.js
-    disclaimer: 'DISCLAIMER:',
+    disclaimer: 'DISCLAIMER: ',
     disclaimerDescription: 'THE COMMONS PROJECT FOUNDATION (“TCP”) DOES NOT PROVIDE MEDICAL ADVICE OR ADMINISTER ANY DIAGNOSTIC MEDICAL TESTS, VACCINES OR OTHER HEALTHCARE INTERVENTIONS. TCP MAKES NO ENDORSEMENT OR REPRESENTATION AS TO THE ACCREDITATION, LICENSING OR GOOD-STANDING OF ANY HEALTHCARE PROVIDER UNDER APPLICABLE STATE, FEDERAL, NATIONAL OR SUPRANATIONAL LAWS AND REGULATIONS. TCP EXPRESSLY DISCLAIMS ANY AND ALL LIABILITY FOR ANY CONSEQUENTIAL, INDIRECT, INCIDENTAL, SPECIAL OR EXEMPLARY DAMAGES, INCLUDING WITHOUT LIMITATION ANY LOSS OF REVENUES OR PROFITS OR ANY LOSS OF USE OF DATA, ARISING OUT OF OR CONNECTED IN ANY WAY WITH ANY DIAGNOSTIC TESTING, MEDICAL TREATMENT, VACCINATION OR OTHER HEALTHCARE INTERVENTION OR OTHERWISE PROVIDED, SPONSORED, OR PROMOTED BY ANY CTN MEMBER, WHETHER PROVIDED BY THE MEMBER ITSELF OR BY ITS AFFILIATES, REPRESENTATIVES, AGENTS OR SUBCONTRACTORS.',
     linksDislaimer: ' ',
     privacyPolicy: 'Website Privacy Policy',
@@ -112,6 +112,8 @@ export const languages = {
     validation2: 'valid',
     validation3: 'and was issued by',
     validation4: 'on',
+    invalidValidation: 'invalid',
+
 
   },
   fr: {
@@ -124,7 +126,7 @@ export const languages = {
 
     // About.js
     aboutTitle: 'Lecteur de carte de santé SMART',
-    aboutSubtitle: 'Lit et vérifie les cartes de santé SMART et les liens dans votre navigateur',
+    aboutSubtitle: 'Lit et vérifie les cartes de santé SMART',
     getStarted: 'Débuter',
     photoDescriptionShort: 'Commencer à numériser en utilisant votre caméra',
     fileDescriptionShort:  "Le lecteur peut généralement lire les fichiers portant l'extension .smart-health-card ou .fhir.",
@@ -143,7 +145,7 @@ export const languages = {
     
 
     // Photo.js
-    captureTitle: "Capturer l'image du code QR de santé Smart",
+    captureTitle: "Capturer l'image du code QR de carte santé SMART",
     cameraPaused: 'Caméra en pause',
     restartCamera: 'Redémarrer la caméra',
     openCamera: 'Ouvrir la caméra',
@@ -152,7 +154,7 @@ export const languages = {
     invalidQrCode: 'Format de code QR invalide. Veuillez scanner un code QR de carte de santé valide.',
     qrCodeError: 'Erreur lors du traitement du code QR. Veuillez réessayer.',
     cameraError: 'Échec du démarrage de la caméra. Veuillez réessayer.',
-    cameraTimeout: 'Session de la caméra expirée. Veuillez redémarrer la caméra.',
+    cameraTimeout: 'La session de la caméra est écoulée. Veuillez redémarrer votre caméra.',
 
     // ValidationInfo.js
     validationTitle: 'Informations de validation',
@@ -170,6 +172,7 @@ export const languages = {
     statusInvalid: 'Statut invalide',
     dateValid: 'Date valide',
     dateInvalid: 'Date invalide',
+    invalidValidation: 'invalide',
 
     // PatientSummary.js
     patientInfo: 'Informations du patient',
@@ -214,7 +217,7 @@ export const languages = {
     openFileText: 'Ouvrir un fichier',
 
     // TCPFooter.js
-    disclaimer: 'CLAUSE DE NON-RESPONSABILITÉ:',
+    disclaimer: 'CLAUSE DE NON-RESPONSABILITÉ : ',
     disclaimerDescription: "LA FONDATION COMMONS PROJECT (« TCP ») NE FOURNIT PAS DE CONSEILS MÉDICAUX ET N'ADMINISTRE PAS DE TESTS MÉDICAUX DIAGNOSTIQUES, DE VACCINS OU D'AUTRES INTERVENTIONS DE SANTÉ. LA TCP NE DONNE AUCUNE GARANTIE NI NE FAIT AUCUNE DÉCLARATION QUANT À L'ACCRÉDITATION, L'AUTORISATION D'EXERCER OU LA BONNE RÉPUTATION D'UN PRESTATAIRE DE SOINS DE SANTÉ EN VERTU DES LOIS ET RÉGLEMENTATIONS ÉTATIQUES, FÉDÉRALES, NATIONALES OU SUPRANATIONALES EN VIGUEUR. LE TCP DÉCLINE EXPRESSÉMENT TOUTE RESPONSABILITÉ EN CAS DE DOMMAGES CONSÉCUTIFS, INDIRECTS, ACCESSOIRES, SPÉCIAUX OU EXEMPLAIRES, Y COMPRIS, MAIS SANS S'Y LIMITER, TOUTE PERTE DE REVENUS OU DE BÉNÉFICES OU TOUTE PERTE D'UTILISATION DE DONNÉES, DÉCOULANT DE OU LIÉS DE QUELQUE MANIÈRE QUE CE SOIT À TOUT TEST DE DIAGNOSTIC, TRAITEMENT MÉDICAL, VACCINATION OU AUTRE INTERVENTION DE SOINS DE SANTÉ OU AUTREMENT FOURNI, PARRAINÉ OU PROMU PAR UN MEMBRE DU CTN, QU'IL SOIT FOURNI PAR LE MEMBRE LUI-MÊME OU PAR SES AFFILIÉS, SES REPRÉSENTANTS, SES AGENTS OU SES SOUS-TRAITANTS.",
     privacyPolicy: 'Politique sur la vie privée du site internet',
     termsOfService: 'Termes et conditions',

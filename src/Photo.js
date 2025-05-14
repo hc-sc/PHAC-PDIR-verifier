@@ -58,6 +58,7 @@ export default function Photo({ viewData }) {
     }
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const pauseCamera = () => { 
     setPaused(true);
     setError(t('cameraTimeout'));
@@ -130,7 +131,7 @@ export default function Photo({ viewData }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!haveCamera || paused) return;
-    
+  
     const checkCameraAccess = async () => {
       try {
         // More flexible camera constraints for different devices
@@ -142,7 +143,7 @@ export default function Photo({ viewData }) {
             frameRate: { ideal: 30 }
           }
         };
-
+  
         // First try with ideal constraints
         let stream;
         try {
@@ -152,7 +153,7 @@ export default function Photo({ viewData }) {
           // Fallback to basic constraints if ideal ones fail
           stream = await navigator.mediaDevices.getUserMedia({ video: true });
         }
-
+  
         stream.getTracks().forEach(track => track.stop());
         setError(null);
       } catch (err) {
@@ -163,54 +164,54 @@ export default function Photo({ viewData }) {
       }
     };
     
-    checkCameraAccess();
-    
-    const videoElement = document.getElementById('video');
-    if (!videoElement) return;
-
-    const scanner = new QrScanner(
-      videoElement,
-      result => {
+      checkCameraAccess();
+  
+        const videoElement = document.getElementById('video');
+        if (!videoElement) return;
+  
+        const scanner = new QrScanner(
+          videoElement,
+          result => {
         console.log('QR Scanner result:', result);
         if (result && result.data) {
           console.log('QR Code detected:', result.data);
-          try {
+              try {
             // Check if the QR code data is a valid SHC string
-            if (result.data.startsWith('shc:/')) {
+                if (result.data.startsWith('shc:/')) {
               console.log('Valid SHC QR code detected');
-              viewData(result.data);
-            } else {
+                  viewData(result.data);
+                } else {
               console.log('Invalid QR code format:', result.data);
-              setError(t('invalidQrCode'));
+                  setError(t('invalidQrCode'));
+                }
+              } catch (err) {
+                console.error('Error processing QR code:', err);
+                setError(t('qrCodeError'));
+              }
             }
-          } catch (err) {
-            console.error('Error processing QR code:', err);
-            setError(t('qrCodeError'));
-          }
-        }
-      },
-      {
-        preferredCamera: 'environment',
-        highlightScanRegion: true,
-        highlightCodeOutline: true,
-        returnDetailedScanResult: true,
-        maxScansPerSecond: 2,
+          },
+          {
+            preferredCamera: 'environment',
+            highlightScanRegion: true,
+            highlightCodeOutline: true,
+            returnDetailedScanResult: true,
+            maxScansPerSecond: 2,
         // More flexible scan region calculation
-        calculateScanRegion: (video) => {
+            calculateScanRegion: (video) => {
           const smallestDimension = Math.min(video.videoWidth, video.videoHeight);
           const scanRegionSize = Math.round(smallestDimension * 0.6); // Smaller region for better focus
-          return {
+              return {
             x: Math.round((video.videoWidth - scanRegionSize) / 2),
             y: Math.round((video.videoHeight - scanRegionSize) / 2),
             width: scanRegionSize,
             height: scanRegionSize,
-          };
-        }
-      }
-    );
-
-    setQrScanner(scanner);
-
+              };
+            }
+          }
+        );
+  
+        setQrScanner(scanner);
+  
     scanner.start()
       .then(() => {
         console.log('QR Scanner started successfully');
@@ -228,17 +229,26 @@ export default function Photo({ viewData }) {
         setError(t('cameraError'));
       });
 
-    const millis = config("cameraPauseTimeoutMillis");
-    const timerId = setTimeout(pauseCamera, millis);
+        const millis = config("cameraPauseTimeoutMillis");
+        const timerId = setTimeout(pauseCamera, millis);  
 
-    return () => {
-      clearTimeout(timerId);
-      scanner.stop();
-      scanner.destroy();
-    };
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [haveCamera, paused, viewData, t]);
+        return () => {
+          clearTimeout(timerId);
+          scanner.stop();
+          scanner.destroy();
+        };
+        
+     //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [haveCamera, paused]);
 
+  useEffect(() => {
+    if (paused) {
+      setError(t('cameraTimeout'));
+    } else {
+      setError(null);
+    }
+  }, [paused, t]);
+  
   return (
     <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
       <h1>{t('captureTitle')}</h1>

@@ -90,8 +90,8 @@ const renderImmunization = (immunization, key) => {
       <td>{age.years}Y {age.months}M</td>
       <td>{futil.renderCodeableJSX(immunization.vaccineCode, dcr)}</td>
       <td>{renderCodings(immunization.vaccineCode.coding)}</td>
-      <td>{sourceJurisdiction}</td>
       <td>{lotNumber}</td> 
+      <td>{sourceJurisdiction}</td>
       {immunization.status && <td>{immunization.status}</td>}
     </tr>
   );
@@ -111,8 +111,8 @@ const renderImmunization = (immunization, key) => {
         <th>At age / <br></br> Âge à l'administration</th>
         <th>Vaccine or antigen / Vaccin ou  antigène</th>
         <th>SNOMED-CT</th>
-        <th>Source jurisdiction / Juridiction de provenance</th>
         <th>Lot number / Numéro de lot</th>
+        <th>Source jurisdiction / Juridiction de provenance</th>
           {immunizations[0].status && <th>Status</th>}
       </tr>
     );

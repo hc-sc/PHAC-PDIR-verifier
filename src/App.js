@@ -57,8 +57,8 @@ function AppContent() {
 
         >
           <Tab label={t('aboutTab')} value={TabValue.About} />
-          {config("showFile") && <Tab label={t('fileTab')} value={TabValue.File} />}
           {config("showPhoto") && <Tab label={t('photoTab')} value={TabValue.Photo} />}
+          {config("showFile") && <Tab label={t('fileTab')} value={TabValue.File} />}
           {fhir && config("showSearch") && <Tab label={t('searchTab')} value={TabValue.Search} />}
           {scannedSHX && <Tab label={t('dataTab')} value={TabValue.Data} />}
         </Tabs>

@@ -2,7 +2,7 @@ export const languages = {
   en: {
     // App.js
     aboutTab: 'About',
-    fileTab: 'Open File',
+    fileTab: 'Open file',
     photoTab: 'Use your camera',
     searchTab: 'Search Record',
     dataTab: 'Card Details',
@@ -77,7 +77,7 @@ export const languages = {
     footerText: 'Powered by TCP',
 
     // File.js
-    fileTitle: 'Open File',
+    fileTitle: 'Open file',
     noFileChosen: 'No file chosen',
     fileDescription: 'The viewer can typically read files with a .smart-health-card or .fhir extension.',
     chooseFile: 'Choose File',

@@ -1,6 +1,7 @@
 import * as futil from "./lib/fhirUtil.js";
 
 import styles from "./ImmunizationHistory.module.css";
+import { useLanguage } from './lib/LanguageContext';
 
 function immunizationsByPatient(resources) {
   const groups = resources.reduce((acc, resource) => {
@@ -128,6 +129,7 @@ const renderImmunization = (immunization, key) => {
 }
 
 export default function ImmunizationHistory({ organized, dcr }) {
+  const { t } = useLanguage();
   const immunizationGroups = immunizationsByPatient(
     Object.values(organized.all)
   );
@@ -136,7 +138,7 @@ export default function ImmunizationHistory({ organized, dcr }) {
   }
   return (
     <div className={styles.container}>
-      <h2>Immunizations</h2>
+      <h2>{t('immunization')}</h2>
       {immunizationGroups.map((ig, index) => (
         <div key={index}>
           {renderImmunizationGroup(index, ig, organized, dcr)}

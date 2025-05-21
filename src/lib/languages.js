@@ -72,6 +72,7 @@ export const languages = {
     status: 'Status',
     completed: 'Completed',
     notCompleted: 'Not Completed',
+    immunization: 'Immunizations',
 
     // TCPFooter.js
     footerText: 'Powered by TCP',
@@ -189,6 +190,7 @@ export const languages = {
     status: 'Statut',
     completed: 'Complété',
     notCompleted: 'Non complété',
+    immunization: 'Vaccins',
 
     // TCPFooter.js
     footerText: 'Propulsé par TCP',

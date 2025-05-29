@@ -14,7 +14,7 @@ import Coverage from './Coverage.js';
 import ImmunizationHistory from './ImmunizationHistory.js'
 import PatientSummary from './PatientSummary.js';
 
-export default function Data({ shx }) {
+export default function Data({ shx,nvcJson  }) {
   const { t } = useLanguage();
 
   const [passcode, setPasscode] = useState(undefined);
@@ -110,7 +110,7 @@ export default function Data({ shx }) {
 		  break;
 
 	    case res.BTYPE_IMMUNIZATION:
-		  elt = <ImmunizationHistory organized={ organized } dcr={ dcr } />;
+		  elt = <ImmunizationHistory organized={organized} dcr={dcr} nvcJson={nvcJson} />
 		  break;
 
 		// >>> ADD MORE RENDERERS HERE <<<

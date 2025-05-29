@@ -26,6 +26,18 @@ function AppContent() {
   const fhir = useOptionalFhir();
   const { t, toggleLanguage, currentLanguage } = useLanguage();
 
+  const [nvcJson, setNvcJson] = useState(null);
+  // Request to download JSON file 
+  useEffect(() => {
+  fetch("https://raw.githubusercontent.com/hc-sc/hc-pdir-vaccine-lookup-table/main/vaccine-table/nvc-bundle.json")
+    .then(response => response.json()) // Convert to make it a usable JSON object
+    .then(data => {
+      setNvcJson(data); // Update with fetched data
+    })
+    .catch(error => console.error("Failed to fetch NVC JSON", error));
+}, []);
+
+
   const handleTabChange = (evt, newValue) => {
     setTabValue(newValue);
   };
@@ -75,7 +87,7 @@ function AppContent() {
         {tabValue === TabValue.File && <File viewData={viewData} />}
         {tabValue === TabValue.Photo && <Photo viewData={viewData} />}
         {tabValue === TabValue.Search && <Search viewData={viewData} />}
-        {tabValue === TabValue.Data && <Data shx={scannedSHX} />}
+        {tabValue === TabValue.Data && <Data shx={scannedSHX} nvcJson={nvcJson} />}
       </div>
 
       {config("tcpFooter") && <TCPFooter />}

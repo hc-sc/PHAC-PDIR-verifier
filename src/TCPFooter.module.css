@@ -3,13 +3,13 @@
 	margin-top: 32px;
 	border-top: 1px dotted darkgray;
 	padding: 8px;
-	font-size: 0.875rem; 
+	font-size: 0.75rem; 
 	line-height: 1.5;
-	color: #000; 
+	color: #000;
 	background-color: #fff;
+	font-family: system-ui, sans-serif;
 }
 
 .container div {
 	margin-bottom: 6px;
 }
-

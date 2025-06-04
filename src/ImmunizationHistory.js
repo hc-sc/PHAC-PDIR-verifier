@@ -1,6 +1,8 @@
 import * as futil from "./lib/fhirUtil.js";
 
 import styles from "./ImmunizationHistory.module.css";
+import { useLanguage } from './lib/LanguageContext';
+import { parseNVCVaccineMappings } from './lib/codes.js';
 
 function immunizationsByPatient(resources) {
   const groups = resources.reduce((acc, resource) => {
@@ -22,7 +24,8 @@ function renderImmunizationGroup(
   key,
   immunizations,
   organized,
-  dcr
+  dcr,
+  nvcVaccineMappings 
 ) {
   const renderPatient = () => {
     const patientInfo = futil.renderPerson(immunizations[0].patient, organized.byId);
@@ -49,21 +52,21 @@ function renderImmunizationGroup(
 
   const renderCodings = (codings) => {
     return (
-      <ul>
-        {codings.map((c, index) => (
-          <li key={index}>
-            {c.code} ({c.system})
-          </li>
-        ))}
-      </ul>
-    );
+    <ul>
+      {codings.map((c, index) => (
+        <li key={index}>
+          {c.code} ({c.system})
+        </li>
+      ))}
+    </ul>
+  );
   };
   const renderPerformers = (performers) => {
 
 	if (!performers) return(undefined);
 	
-  return (
-    <ul>
+    return (
+      <ul>
       {performers.map((p, index) => {
         return (
           <li key={index}>
@@ -71,51 +74,57 @@ function renderImmunizationGroup(
           </li>
         );
       })}
-    </ul>
-  );
-};
+      </ul>
+    );
+  };
 const renderImmunization = (immunization, key) => {
-  const patientInfo = futil.renderPerson(immunizations[0].patient, organized.byId);
-  const birthDate = patientInfo.dob;
-  const age = futil.renderAge(immunization.occurrenceDateTime, birthDate);
-  const lotNumber = immunization.lotNumber === "N/A" ? "Unspecified" : immunization.lotNumber;
-  const sourceJurisdiction = immunization.performer.some((p) => p.actor.display === "N/A")
+    const patientInfo = futil.renderPerson(immunizations[0].patient, organized.byId);
+    const birthDate = patientInfo.dob;
+    const age = futil.renderAge(immunization.occurrenceDateTime, birthDate);
+    const lotNumber = immunization.lotNumber === "N/A" ? "Unspecified" : immunization.lotNumber;
+    const sourceJurisdiction = immunization.performer.some((p) => p.actor.display === "N/A")
       ? "Unspecified"
       : renderPerformers(immunization.performer);
 
+      const vaccineCode = String(immunization.vaccineCode?.coding?.[0]?.code ?? "");
+      const diseases = nvcVaccineMappings[vaccineCode]
+        ? nvcVaccineMappings[vaccineCode].diseases.join(", ")
+        : "Unknown";      
 
-  return (
+    return (
     <tr key={key}>
-      <td>{immunization.occurrenceDateTime}</td>
-      <td>{age.years}Y {age.months}M</td>
-      <td>{futil.renderCodeableJSX(immunization.vaccineCode, dcr)}</td>
-      <td>{renderCodings(immunization.vaccineCode.coding)}</td>
-      <td>{sourceJurisdiction}</td>
-      <td>{lotNumber}</td> 
-      {immunization.status && <td>{immunization.status}</td>}
-    </tr>
-  );
-};
+        <td>{immunization.occurrenceDateTime}</td>
+        <td>{age.years}Y {age.months}M</td>
+        <td>{diseases}</td>
+        <td>{futil.renderCodeableJSX(immunization.vaccineCode, dcr)}</td>
+        <td>{renderCodings(immunization.vaccineCode.coding)}</td>
+        <td>{lotNumber}</td> 
+        <td>{sourceJurisdiction}</td>
+        {immunization.status && <td>{immunization.status}</td>}
+      </tr>
+    );
+  };
 
 
   const renderImmunizations = () => {
     return immunizations
-    .sort((a, b) => new Date(b.occurrenceDateTime) - new Date(a.occurrenceDateTime))
+      .sort((a, b) => new Date(b.occurrenceDateTime) - new Date(a.occurrenceDateTime))
     .map((i, index) => renderImmunization(i, index));
   };
 
   const renderImmunizationHeaders = () => {
     return (
-      <tr>
-        <th>Date given (Y-M-D) / Date d'administration  <br></br> (A-M-J)</th>
-        <th>At age / <br></br> Âge à l'administration</th>
-        <th>Vaccine or antigen / Vaccin ou  antigène</th>
-        <th>SNOMED-CT</th>
-        <th>Source jurisdiction / Juridiction de provenance</th>
-        <th>Lot number / Numéro de lot</th>
-          {immunizations[0].status && <th>Status</th>}
-      </tr>
-    );
+    <tr>
+      <th>Date given (Y-M-D) / Date d'administration  <br></br> (A-M-J)</th>
+      <th>At age / <br></br> Âge à l'administration</th>
+      <th>Vaccine preventable disease(s) / Maladie(s) évitable(s)</th>
+      <th>Vaccine or antigen / Vaccin ou  antigène</th>
+      <th>SNOMED-CT</th>
+      <th>Lot number / Numéro de lot</th>
+      <th>Source jurisdiction / Juridiction de provenance</th>
+      {immunizations[0].status && <th>Status</th>}
+    </tr>
+  );
   };
 
   return (
@@ -127,7 +136,9 @@ const renderImmunization = (immunization, key) => {
   );
 }
 
-export default function ImmunizationHistory({ organized, dcr }) {
+export default function ImmunizationHistory({ organized, dcr, nvcJson }) {
+  const { t } = useLanguage();
+  const nvcVaccineMappings = parseNVCVaccineMappings(nvcJson);
   const immunizationGroups = immunizationsByPatient(
     Object.values(organized.all)
   );
@@ -136,10 +147,10 @@ export default function ImmunizationHistory({ organized, dcr }) {
   }
   return (
     <div className={styles.container}>
-      <h2>Immunizations</h2>
+      <h2>{t('immunization')}</h2>
       {immunizationGroups.map((ig, index) => (
         <div key={index}>
-          {renderImmunizationGroup(index, ig, organized, dcr)}
+          {renderImmunizationGroup(index, ig, organized, dcr, nvcVaccineMappings)}
         </div>
       ))}
     </div>

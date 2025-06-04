@@ -340,10 +340,10 @@
 .languageButton {
 	padding: 0.5rem 1rem;
 	margin-left: 1rem;
-	background-color: rgb(230, 231, 237) !important;
+	background-color: #1976d2 !important;
 	border: 1px solid #e2e8f0;
 	border-radius: 4px;
-	color: #092e6b !important;
+	color: #f8fafc !important;
 	font-weight: 500;
 	cursor: pointer;
 	transition: all 0.2s;

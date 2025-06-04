@@ -26,6 +26,18 @@ function AppContent() {
   const fhir = useOptionalFhir();
   const { t, toggleLanguage, currentLanguage } = useLanguage();
 
+  const [nvcJson, setNvcJson] = useState(null);
+  // Request to download JSON file 
+  useEffect(() => {
+  fetch("https://raw.githubusercontent.com/hc-sc/hc-pdir-vaccine-lookup-table/main/vaccine-table/nvc-bundle.json")
+    .then(response => response.json()) // Convert to make it a usable JSON object
+    .then(data => {
+      setNvcJson(data); // Update with fetched data
+    })
+    .catch(error => console.error("Failed to fetch NVC JSON", error));
+}, []);
+
+
   const handleTabChange = (evt, newValue) => {
     setTabValue(newValue);
   };
@@ -57,8 +69,8 @@ function AppContent() {
 
         >
           <Tab label={t('aboutTab')} value={TabValue.About} />
-          {config("showFile") && <Tab label={t('fileTab')} value={TabValue.File} />}
           {config("showPhoto") && <Tab label={t('photoTab')} value={TabValue.Photo} />}
+          {config("showFile") && <Tab label={t('fileTab')} value={TabValue.File} />}
           {fhir && config("showSearch") && <Tab label={t('searchTab')} value={TabValue.Search} />}
           {scannedSHX && <Tab label={t('dataTab')} value={TabValue.Data} />}
         </Tabs>
@@ -75,7 +87,7 @@ function AppContent() {
         {tabValue === TabValue.File && <File viewData={viewData} />}
         {tabValue === TabValue.Photo && <Photo viewData={viewData} />}
         {tabValue === TabValue.Search && <Search viewData={viewData} />}
-        {tabValue === TabValue.Data && <Data shx={scannedSHX} />}
+        {tabValue === TabValue.Data && <Data shx={scannedSHX} nvcJson={nvcJson} />}
       </div>
 
       {config("tcpFooter") && <TCPFooter />}

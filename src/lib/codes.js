@@ -316,17 +316,22 @@ function parseDocketVaccineMappings(json, tag) {
 // +----------------------------+
 // | parseNVCVaccineMappings |
 // +----------------------------+
-function parseNVCVaccineMappings(json, tag) {
-    const values = json[tag];
-    const parsed = {};
-    if (!values || typeof values !== "object") {
-        return {}; // Return an empty object if `values` is invalid or undefined
-    }
-    Object.keys(values).forEach((key) => {
-        const item = values[key];
-        parsed[key.toString()] = item.displayName || "Unknown";
+export function parseNVCVaccineMappings(json) {
+  const table = json?.table || {}; 
+  const parsed = {};
+
+  Object.keys(table).forEach(vaccineCode => {
+    const entry = table[vaccineCode]; // loop through vaccine code
+    const diseases = (entry.diseaseEN || []).map(diseaseObj => { //extract value which is the disease names
+      return Object.values(diseaseObj)[0];
     });
-    return (parsed);
+
+    parsed[vaccineCode] = { // Return display name and disease names
+      displayName: entry.displayEN || "Unknown",
+      diseases: diseases.length ? diseases : ["Unknown"], // If it's truthy, return the diseases OW retun "Unknown"
+    };
+  });
+  return (parsed);
 }
 // +--------------+
 // | getFromLocal |

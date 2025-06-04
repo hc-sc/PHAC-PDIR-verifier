@@ -120,11 +120,14 @@ export function getPersonDisplayName(name) {
   if (name.text) return(name.text);
 
   let d = "";
+  
+  d = spaceAppend(d, name.family);
+  d = spaceAppend(d, name.suffix);
+
+  if (d) d += ", "; 
 
   d = spaceAppend(d, name.prefix);
   d = spaceAppendArray(d, name.given);
-  d = spaceAppend(d, name.family);
-  d = spaceAppend(d, name.suffix);
 
   return(d);
 }

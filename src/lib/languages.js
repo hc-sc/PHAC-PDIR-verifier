@@ -2,7 +2,7 @@ export const languages = {
   en: {
     // App.js
     aboutTab: 'About',
-    fileTab: 'Open File',
+    fileTab: 'Open file',
     photoTab: 'Use your camera',
     searchTab: 'Search Record',
     dataTab: 'Card Details',
@@ -29,7 +29,7 @@ export const languages = {
     aboutPrivacy: 'Personal health information is processed exclusively in the browser and is never sent to the servers hosting the viewer.',
 
     // Photo.js
-    captureTitle: 'Capture SMART Health card QR Code image',
+    captureTitle: 'Capture SMART Health Card QR Code image',
     cameraPaused: 'Camera paused',
     restartCamera: 'Restart Camera',
     openCamera: 'Open Camera',
@@ -72,12 +72,13 @@ export const languages = {
     status: 'Status',
     completed: 'Completed',
     notCompleted: 'Not Completed',
+    immunization: 'Immunizations',
 
     // TCPFooter.js
     footerText: 'Powered by TCP',
 
     // File.js
-    fileTitle: 'Open File',
+    fileTitle: 'Open file',
     noFileChosen: 'No file chosen',
     fileDescription: 'The viewer can typically read files with a .smart-health-card or .fhir extension.',
     chooseFile: 'Choose File',
@@ -189,6 +190,7 @@ export const languages = {
     status: 'Statut',
     completed: 'Complété',
     notCompleted: 'Non complété',
+    immunization: 'Vaccins',
 
     // TCPFooter.js
     footerText: 'Propulsé par TCP',

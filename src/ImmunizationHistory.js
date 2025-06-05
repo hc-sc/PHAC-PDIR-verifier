@@ -91,12 +91,16 @@ const renderImmunization = (immunization, key) => {
         ? nvcVaccineMappings[vaccineCode].diseases.join(", ")
         : "Unknown";      
 
+      const displayName =  nvcVaccineMappings[vaccineCode] 
+        ? nvcVaccineMappings[vaccineCode].displayName 
+        : "Unknown";
+
     return (
     <tr key={key}>
         <td>{immunization.occurrenceDateTime}</td>
         <td>{age.years}Y {age.months}M</td>
         <td>{diseases}</td>
-        <td>{futil.renderCodeableJSX(immunization.vaccineCode, dcr)}</td>
+        <td>{displayName}</td>
         <td>{renderCodings(immunization.vaccineCode.coding)}</td>
         <td>{lotNumber}</td> 
         <td>{sourceJurisdiction}</td>

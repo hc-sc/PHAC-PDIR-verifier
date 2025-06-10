@@ -121,7 +121,7 @@ const renderImmunization = (immunization, key) => {
     <tr>
       <th>Date given (Y-M-D) / Date d'administration  <br></br> (A-M-J)</th>
       <th>At age / <br></br> Âge à l'administration</th>
-      <th>Vaccine preventable disease(s) / Maladie(s) évitable(s)</th>
+      <th>Vaccine preventable disease(s) / Maladie(s) évitable(s) par la vaccination</th>
       <th>Vaccine or antigen / Vaccin ou  antigène</th>
       <th>SNOMED-CT</th>
       <th>Lot number / Numéro de lot</th>

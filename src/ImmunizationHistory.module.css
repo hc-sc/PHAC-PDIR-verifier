@@ -82,6 +82,11 @@
 	font-size: 0.875rem;
 	letter-spacing: 0.05em;
 	border-bottom: 1px solid #E2E8F0;
+	border-right: 1px solid #E2E8F0;
+}
+
+.immunizationTable th:last-child {
+	border-right: none;
 }
 
 /* Table Cells - Clean and Readable */
@@ -91,6 +96,7 @@
 	font-size: 0.9375rem;
 	line-height: 1.6;
 	border-bottom: 1px solid #F1F5F9;
+	border-right: 1px solid #F1F5F9;
 }
 
 /* Hover State - Subtle Highlight */

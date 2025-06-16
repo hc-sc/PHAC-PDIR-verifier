@@ -88,8 +88,8 @@ const renderImmunization = (immunization, key) => {
 
       const vaccineCode = String(immunization.vaccineCode?.coding?.[0]?.code ?? "");
       const diseases = nvcVaccineMappings[vaccineCode]
-        ? nvcVaccineMappings[vaccineCode].diseases.join(", ")
-        : "Unknown";      
+      ? nvcVaccineMappings[vaccineCode].diseases.sort().join("; ")
+      : "Unknown";   
 
       const displayName =  nvcVaccineMappings[vaccineCode] 
         ? nvcVaccineMappings[vaccineCode].displayName 

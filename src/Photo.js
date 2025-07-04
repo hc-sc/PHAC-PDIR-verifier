@@ -3,6 +3,13 @@ import { Button, CircularProgress, Alert } from '@mui/material';
 import config from './lib/config.js';
 import QrScanner from 'qr-scanner';
 import { useLanguage } from './lib/LanguageContext';
+import { 
+  isMobileDevice, 
+  getMobileCameraConstraints, 
+  getMobileScannerOptions, 
+  getMobileCameraErrorMessage,
+  getMobileStyles 
+} from './lib/mobileUtils.js';
 
 // Add focus animation keyframes
 const focusAnimation = `
@@ -35,6 +42,18 @@ export default function Photo({ viewData }) {
   const [isLoading, setIsLoading] = useState(false);
   const [qrScanner, setQrScanner] = useState(null);
   const [focusPoint, setFocusPoint] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(isMobileDevice());
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const openCameraClick = () => {
     setIsLoading(true);
@@ -58,7 +77,6 @@ export default function Photo({ viewData }) {
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const pauseCamera = () => { 
     setPaused(true);
     setError(t('cameraTimeout'));
@@ -68,12 +86,18 @@ export default function Photo({ viewData }) {
   };
 
   const handleFocus = (event) => {
-    console.log('Tap detected!', {
+    // Handle both touch and click events
+    const isTouch = event.type === 'touchstart' || event.type === 'touchend';
+    const clientX = isTouch ? event.touches?.[0]?.clientX || event.changedTouches?.[0]?.clientX : event.clientX;
+    const clientY = isTouch ? event.touches?.[0]?.clientY || event.changedTouches?.[0]?.clientY : event.clientY;
+
+    console.log('Interaction detected!', {
       eventType: event.type,
-      clientX: event.clientX,
-      clientY: event.clientY,
+      clientX,
+      clientY,
       target: event.target,
-      hasVideo: !!qrScanner?._videoElement
+      hasVideo: !!qrScanner?._videoElement,
+      isMobile
     });
 
     if (!qrScanner || !qrScanner._videoElement) {
@@ -91,11 +115,11 @@ export default function Photo({ viewData }) {
       height: rect.height
     });
     
-    // Calculate the touch point relative to the video element
-    const x = event.clientX - rect.left;
-    const y = event.clientY - rect.top;
+    // Calculate the touch/click point relative to the video element
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
     
-    console.log('Calculated tap position:', { x, y });
+    console.log('Calculated position:', { x, y });
     
     // Update focus point for visual feedback
     setFocusPoint({ x, y });
@@ -128,21 +152,29 @@ export default function Photo({ viewData }) {
     }, 1000);
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // Check camera permissions
+  const checkCameraPermissions = async () => {
+    try {
+      if (navigator.permissions && navigator.permissions.query) {
+        const permission = await navigator.permissions.query({ name: 'camera' });
+        setCameraPermission(permission.state);
+        
+        permission.onchange = () => {
+          setCameraPermission(permission.state);
+        };
+      }
+    } catch (err) {
+      console.log('Permission API not supported');
+    }
+  };
+
   useEffect(() => {
     if (!haveCamera || paused) return;
   
     const checkCameraAccess = async () => {
       try {
-        // More flexible camera constraints for different devices
-        const constraints = {
-          video: {
-            facingMode: { ideal: 'environment' },
-            width: { min: 640, ideal: 1920 },
-            height: { min: 480, ideal: 1080 },
-            frameRate: { ideal: 30 }
-          }
-        };
+        // Mobile-optimized camera constraints
+        const constraints = getMobileCameraConstraints(isMobile);
   
         // First try with ideal constraints
         let stream;
@@ -151,7 +183,13 @@ export default function Photo({ viewData }) {
         } catch (err) {
           console.log('Falling back to basic constraints');
           // Fallback to basic constraints if ideal ones fail
-          stream = await navigator.mediaDevices.getUserMedia({ video: true });
+          stream = await navigator.mediaDevices.getUserMedia({ 
+            video: { 
+              facingMode: 'environment',
+              width: { min: 320 },
+              height: { min: 240 }
+            } 
+          });
         }
   
         stream.getTracks().forEach(track => track.stop());
@@ -159,68 +197,53 @@ export default function Photo({ viewData }) {
       } catch (err) {
         console.error('Camera access error:', err);
         setHaveCamera(false);
-        setError(t('cameraAccessDenied'));
+        setError(getMobileCameraErrorMessage(err));
         return;
       }
     };
     
-      checkCameraAccess();
+    checkCameraAccess();
+    checkCameraPermissions();
   
-        const videoElement = document.getElementById('video');
-        if (!videoElement) return;
-  
-        const scanner = new QrScanner(
-          videoElement,
-          result => {
+    const videoElement = document.getElementById('video');
+    if (!videoElement) return;
+
+    const scannerOptions = getMobileScannerOptions(isMobile);
+    const scanner = new QrScanner(
+      videoElement,
+      result => {
         console.log('QR Scanner result:', result);
         if (result && result.data) {
           console.log('QR Code detected:', result.data);
-              try {
+          try {
             // Check if the QR code data is a valid SHC string
-                if (result.data.startsWith('shc:/')) {
+            if (result.data.startsWith('shc:/')) {
               console.log('Valid SHC QR code detected');
-                  viewData(result.data);
-                } else {
+              viewData(result.data);
+            } else {
               console.log('Invalid QR code format:', result.data);
-                  setError(t('invalidQrCode'));
-                }
-              } catch (err) {
-                console.error('Error processing QR code:', err);
-                setError(t('qrCodeError'));
-              }
+              setError(t('invalidQrCode'));
             }
-          },
-          {
-            preferredCamera: 'environment',
-            highlightScanRegion: true,
-            highlightCodeOutline: true,
-            returnDetailedScanResult: true,
-            maxScansPerSecond: 2,
-        // More flexible scan region calculation
-            calculateScanRegion: (video) => {
-          const smallestDimension = Math.min(video.videoWidth, video.videoHeight);
-          const scanRegionSize = Math.round(smallestDimension * 0.6); // Smaller region for better focus
-              return {
-            x: Math.round((video.videoWidth - scanRegionSize) / 2),
-            y: Math.round((video.videoHeight - scanRegionSize) / 2),
-            width: scanRegionSize,
-            height: scanRegionSize,
-              };
-            }
+          } catch (err) {
+            console.error('Error processing QR code:', err);
+            setError(t('qrCodeError'));
           }
-        );
-  
-        setQrScanner(scanner);
-  
+        }
+      },
+      scannerOptions
+    );
+
+    setQrScanner(scanner);
+
     scanner.start()
       .then(() => {
         console.log('QR Scanner started successfully');
-        // Test the scanner by logging its state
         console.log('Scanner state:', {
           isRunning: scanner._isRunning,
           isDestroyed: scanner._isDestroyed,
           videoElement: scanner._videoElement,
-          canvasElement: scanner._canvasElement
+          canvasElement: scanner._canvasElement,
+          isMobile
         });
       })
       .catch((err) => {
@@ -229,17 +252,16 @@ export default function Photo({ viewData }) {
         setError(t('cameraError'));
       });
 
-        const millis = config("cameraPauseTimeoutMillis");
-        const timerId = setTimeout(pauseCamera, millis);  
+    const millis = config("cameraPauseTimeoutMillis");
+    const timerId = setTimeout(pauseCamera, millis);  
 
-        return () => {
-          clearTimeout(timerId);
-          scanner.stop();
-          scanner.destroy();
-        };
-        
-     //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [haveCamera, paused]);
+    return () => {
+      clearTimeout(timerId);
+      scanner.stop();
+      scanner.destroy();
+    };
+
+  }, [haveCamera, paused, isMobile]);
 
   useEffect(() => {
     if (paused) {
@@ -249,9 +271,11 @@ export default function Photo({ viewData }) {
     }
   }, [paused, t]);
   
+  const styles = getMobileStyles(isMobile);
+  
   return (
-    <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
-      <h1>{t('captureTitle')}</h1>
+    <div style={styles.container}>
+      <h1 style={styles.title}>{t('captureTitle')}</h1>
       
       {error && (
         <Alert severity="error" sx={{ mb: 2 }}>
@@ -276,39 +300,17 @@ export default function Photo({ viewData }) {
 
       {haveCamera && !paused && !isLoading && (
         <div 
-          style={{ 
-            position: 'relative', 
-            width: '100%', 
-            maxWidth: '600px', 
-            margin: '0 auto',
-            height: '400px', // Fixed height for the container
-            overflow: 'hidden', // Hide overflow
-            cursor: 'pointer' // Show pointer cursor to indicate clickable area
-          }}
+          style={styles.videoContainer}
           onClick={handleFocus}
+          onTouchStart={handleFocus}
+          className="camera-interface"
         >
           <video 
             id='video' 
-            style={{ 
-              width: '100%', 
-              height: '100%',
-              borderRadius: '8px',
-              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-              transform: 'scaleX(-1)', // Mirror the video for better UX
-              objectFit: 'cover' // Ensure video fills the container
-            }}
+            style={styles.video}
+            playsInline // Important for iOS
+            muted // Required for autoplay
           />
-          <div style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: '60%',
-            height: '60%',
-            border: '2px solid rgba(255, 255, 255, 0.5)',
-            borderRadius: '8px',
-            pointerEvents: 'none'
-          }} />
           {focusPoint && (
             <div
               style={{
@@ -339,6 +341,21 @@ export default function Photo({ viewData }) {
           >
             {t('openCamera')}
           </Button>
+        </div>
+      )}
+
+      {/* Mobile-specific instructions */}
+      {isMobile && haveCamera && !paused && !isLoading && (
+        <div style={{ 
+          textAlign: 'center', 
+          marginTop: '20px',
+          padding: '15px',
+          backgroundColor: 'rgba(0, 0, 0, 0.05)',
+          borderRadius: '8px'
+        }}>
+          <p style={{ margin: '0', fontSize: '0.9rem', color: '#666' }}>
+            Tap anywhere on the camera view to focus • Hold steady for best results
+          </p>
         </div>
       )}
     </div>

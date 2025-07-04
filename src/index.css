@@ -1,7 +1,16 @@
-
 body {
-	font-family: 'Open Sans';
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 	font-size: 14px;
+}
+
+code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+		monospace;
 }
 
 .xtrahover {
@@ -10,5 +19,58 @@ body {
 
 #bundle-contents {
 	padding: 4px 4px 4px 4px;
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+	/* Prevent zoom on input focus */
+	input, textarea, select {
+		font-size: 16px !important;
+	}
+	
+	/* Better touch targets */
+	button, [role="button"] {
+		min-height: 44px;
+		min-width: 44px;
+	}
+	
+	/* Prevent horizontal scroll */
+	body {
+		overflow-x: hidden;
+	}
+	
+	  /* Better video container for mobile */
+  video {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+	
+	/* Improve touch feedback */
+	* {
+		-webkit-tap-highlight-color: transparent;
+	}
+	
+	/* Better focus indicators for accessibility */
+	button:focus, input:focus, textarea:focus, select:focus {
+		outline: 2px solid #007bff;
+		outline-offset: 2px;
+	}
+}
+
+/* Prevent text selection on camera interface */
+.camera-interface {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Smooth animations for mobile */
+@media (prefers-reduced-motion: no-preference) {
+	.camera-interface * {
+		transition: all 0.2s ease-in-out;
+	}
 }
 

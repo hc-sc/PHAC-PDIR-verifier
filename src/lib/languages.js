@@ -86,7 +86,7 @@ export const languages = {
     invalidFile: 'Invalid file format. Please choose a valid SMART Health Card file.',
 
     // Scan.js
-    scanDescription: 'Position the QR code within the frame to scan',
+    scanDescription: 'Please place the QR code in the frame. For best results, keep it steady and in good lighting',
     scanError: 'Error scanning QR code. Please try again.',
     scanSuccess: 'QR code scanned successfully',
     readCode: 'Read Code',
@@ -204,7 +204,7 @@ export const languages = {
     invalidFile: 'Format de fichier invalide. Veuillez choisir un fichier de carte de santé SMART valide.',
 
     // Scan.js
-    scanDescription: 'Positionnez le code QR dans le cadre pour le scanner',
+    scanDescription: 'Veuillez placer le code QR dans le cadre. Pour de meilleurs résultats, gardez-le stable et dans un bon éclairage',
     scanError: 'Erreur lors du scan du code QR. Veuillez réessayer.',
     scanSuccess: 'Code QR scanné avec succès',
     readCode: 'Lire le code',

@@ -23,6 +23,10 @@ export default function Scan({ viewData }) {
   return (
     <div>
       <h1>{t('scanTitle')}</h1>
+      
+      <p style={{ color: '#666', marginBottom: '20px' }}>
+        {t('scanDescription')}
+      </p>
 
       <TextField variant='outlined'
                  rows={6}

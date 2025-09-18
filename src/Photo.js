@@ -277,6 +277,10 @@ export default function Photo({ viewData }) {
     <div style={styles.container}>
       <h1 style={styles.title}>{t('captureTitle')}</h1>
       
+      <p style={{ color: '#666', marginBottom: '20px', textAlign: 'center' }}>
+        {t('scanDescription')}
+      </p>
+      
       {error && (
         <Alert severity="error" sx={{ mb: 2 }}>
           {error}

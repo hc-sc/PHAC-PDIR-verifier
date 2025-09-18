@@ -11,8 +11,14 @@ export function LanguageProvider({ children }) {
     setCurrentLanguage(currentLanguage === 'en' ? 'fr' : 'en');
   };
 
+  const setLanguage = (language) => {
+    if (language === 'en' || language === 'fr') {
+      setCurrentLanguage(language);
+    }
+  };
+
   return (
-    <LanguageContext.Provider value={{ currentLanguage, t, toggleLanguage }}>
+    <LanguageContext.Provider value={{ currentLanguage, t, toggleLanguage, setLanguage }}>
       {children}
     </LanguageContext.Provider>
   );

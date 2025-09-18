@@ -9,18 +9,20 @@ import * as res from './lib/resources.js';
 import ValidationInfo from './ValidationInfo.js';
 import WrongPatientWarning from './WrongPatientWarning.js';
 import { useLanguage } from './lib/LanguageContext';
+import { detectLanguageFromSHCComprehensive } from './lib/languageDetection.js';
 
 import Coverage from './Coverage.js';
 import ImmunizationHistory from './ImmunizationHistory.js'
 import PatientSummary from './PatientSummary.js';
 
 export default function Data({ shx,nvcJson  }) {
-  const { t } = useLanguage();
+  const { t, setLanguage, currentLanguage } = useLanguage();
 
   const [passcode, setPasscode] = useState(undefined);
   const [shxResult, setShxResult] = useState(undefined);
   const [bundleIndex, setBundleIndex] = useState(0);
   const [showSource, setShowSource] = useState(false);
+  const [languageDetected, setLanguageDetected] = useState(false);
 
   const [dcr, setDcr] = useState(getDeferringCodeRenderer());
 
@@ -123,6 +125,22 @@ export default function Data({ shx,nvcJson  }) {
 
 	return(
 	  <>
+		{ languageDetected && (
+		  <div style={{
+			padding: '10px',
+			margin: '10px 0',
+			backgroundColor: '#e3f2fd',
+			border: '1px solid #2196f3',
+			borderRadius: '4px',
+			color: '#1976d2',
+			fontSize: '14px'
+		  }}>
+			{currentLanguage === 'fr' 
+			  ? 'Langue détectée automatiquement depuis la carte de santé : Français'
+			  : 'Language automatically detected from health card: English'
+			}
+		  </div>
+		)}
 		{ renderBundleChooser() }
 		<div id="bundle-contents">
 		  <ValidationInfo bundle={bundle} />
@@ -204,11 +222,22 @@ export default function Data({ shx,nvcJson  }) {
     verifySHX(shx, passcode)
         .then(result => {
             setShxResult(result);
+            setLanguageDetected(false); // Reset language detection state
+            
+            // Auto-detect and set language from SHC data
+            if (result && result.shxStatus === SHX_STATUS_OK) {
+              const detectedLanguage = detectLanguageFromSHCComprehensive(result);
+              if (detectedLanguage) {
+                console.log(`Auto-detected language from SHC: ${detectedLanguage}`);
+                setLanguage(detectedLanguage);
+                setLanguageDetected(true);
+              }
+            }
         })
         .catch(error => {
             // Handle the error appropriately
         });
-  }, [shx, passcode]);
+  }, [shx, passcode, setLanguage]);
 
 
   useEffect(() => {

@@ -248,7 +248,7 @@ async function loadSystem(system) {
 	  return(parseDocketVaccineMappings(await response.json(), "cpt"));
 
     case "nvc":
-      return (parseNVCVaccineMappings(await response.json(), "table"));
+      return (await parseNVCVaccineMappings(await response.json()));
 
 	default:
 	  throw new Error(`Unknown system type ${type} for ${system}`);
@@ -314,24 +314,310 @@ function parseDocketVaccineMappings(json, tag) {
 }
 
 // +----------------------------+
-// | parseNVCVaccineMappings |
+// | Disease Name Mapping      |
 // +----------------------------+
-export function parseNVCVaccineMappings(json) {
+
+// Cache for disease name maps
+let _diseaseNameMaps = {};
+
+async function getDiseaseNameMap(language) {
+  if (_diseaseNameMaps[language]) {
+    return _diseaseNameMaps[language];
+  }
+
+  try {
+    const snomedSystem = await getSystem("http://snomed.info/sct");
+    if (!snomedSystem) {
+      console.warn("SNOMED system not available, using fallback disease names");
+      // Fallback to hardcoded disease names if SNOMED system fails
+      _diseaseNameMaps[language] = getFallbackDiseaseNames();
+      return _diseaseNameMaps[language];
+    }
+    
+    _diseaseNameMaps[language] = snomedSystem;
+    return snomedSystem;
+  } catch (error) {
+    console.error(`Failed to load disease name map for ${language}:`, error);
+    // Fallback to hardcoded disease names
+    _diseaseNameMaps[language] = getFallbackDiseaseNames();
+    return _diseaseNameMaps[language];
+  }
+}
+
+function getFallbackDiseaseNames() {
+  return {
+    "397430003": "Diphtheria due to Corynebacterium diphtheriae",
+    "406583002": "Haemophilus influenzae type b infection",
+    "27836007": "Pertussis",
+    "398102009": "Acute poliomyelitis",
+    "76902006": "Tetanus",
+    "18624000": "Rotavirus infection",
+    "56717001": "Tuberculosis",
+    "66071002": "Hepatitis B",
+    "40468003": "Hepatitis A",
+    "14189004": "Measles",
+    "36653000": "Mumps",
+    "36989005": "Rubella",
+    "38907003": "Varicella",
+    "23511006": "Meningococcal disease",
+    "16814004": "Pneumococcal disease",
+    "240532009": "Human papilloma virus infection",
+    "840539006": "COVID-19",
+    "6142004": "Influenza",
+    "4740000": "Shingles",
+    "55735004": "Respiratory syncytial virus infection",
+    "67924001": "Smallpox",
+    "359814004": "Mpox",
+    "14168008": "Rabies",
+    "409498004": "Anthrax",
+    "45901000087102": "Zaire Ebolavirus disease",
+    "63650001": "Cholera",
+    "11840006": "Traveler's diarrhea",
+    "4834000": "Typhoid fever",
+    "111864006": "Chikungunya fever",
+    "52947006": "Japanese encephalitis",
+    "712986001": "Tickborne encephalitis"
+  };
+}
+
+function cleanLabel(label) {
+  if (!label) return "";
+  return label.trim().replace(/\s+/g, " ");
+}
+
+// +----------------------------+
+// | buildCategoryLabels        |
+// +----------------------------+
+
+async function buildCategoryLabels() {
+  const diseaseNameMapEN = await getDiseaseNameMap("EN");
+  const diseaseNameMapFR = await getDiseaseNameMap("FR");
+
+  // Static categories as defined
+  const staticLabels = {
+    category1Group: {
+      snomedCodes: ["397430003", "406583002", "27836007", "398102009", "76902006"], // Diphtheria, Haemophilus influenzae, Pertussis, Poliomyelitis, Tetanus
+      get nameEN() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapEN[code]).filter(Boolean).join(", ")); },
+      get nameFR() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapFR[code]).filter(Boolean).join(", ")); }
+    },
+    category2Group: {
+      snomedCodes: ["18624000"], // Rotavirus
+      get nameEN() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapEN[code]).filter(Boolean).join(", ")); },
+      get nameFR() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapFR[code]).filter(Boolean).join(", ")); }
+    },
+    category3Group: {
+      snomedCodes: ["56717001"], // Tuberculosis
+      get nameEN() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapEN[code]).filter(Boolean).join(", ")); },
+      get nameFR() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapFR[code]).filter(Boolean).join(", ")); }
+    },
+    category4Group: {
+      snomedCodes: ["66071002", "40468003"], // Hepatitis A, B
+      get nameEN() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapEN[code]).filter(Boolean).join(", ")); },
+      get nameFR() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapFR[code]).filter(Boolean).join(", ")); }
+    },
+    category5Group: {
+      snomedCodes: ["14189004", "36653000", "36989005", "38907003"], // Measles, Mumps, Rubella, Varicella
+      get nameEN() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapEN[code]).filter(Boolean).join(", ")); },
+      get nameFR() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapFR[code]).filter(Boolean).join(", ")); }
+    },
+    category6Group: {
+      snomedCodes: ["23511006"], // Meningococcal disease
+      get nameEN() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapEN[code]).filter(Boolean).join(", ")); },
+      get nameFR() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapFR[code]).filter(Boolean).join(", ")); }
+    },
+    category7Group: {
+      snomedCodes: ["16814004"], // Pneumococcal disease
+      get nameEN() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapEN[code]).filter(Boolean).join(", ")); },
+      get nameFR() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapFR[code]).filter(Boolean).join(", ")); }
+    },
+    category8Group: {
+      snomedCodes: ["240532009"], // Human papilloma virus infection
+      get nameEN() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapEN[code]).filter(Boolean).join(", ")); },
+      get nameFR() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapFR[code]).filter(Boolean).join(", ")); }
+    },
+    category9Group: {
+      snomedCodes: ["840539006", "6142004"], // COVID-19, Influenza
+      get nameEN() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapEN[code]).filter(Boolean).join(", ")); },
+      get nameFR() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapFR[code]).filter(Boolean).join(", ")); }
+    },
+    category10Group: {
+      snomedCodes: ["4740000"], // Shingles
+      get nameEN() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapEN[code]).filter(Boolean).join(", ")); },
+      get nameFR() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapFR[code]).filter(Boolean).join(", ")); }
+    },
+    category11Group: {
+      snomedCodes: ["55735004"], // Respiratory syncytial virus infection
+      get nameEN() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapEN[code]).filter(Boolean).join(", ")); },
+      get nameFR() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapFR[code]).filter(Boolean).join(", ")); }
+    },
+    category12Group: {
+      snomedCodes: ["67924001", "359814004"], // Smallpox, Mpox
+      get nameEN() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapEN[code]).filter(Boolean).join(", ")); },
+      get nameFR() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapFR[code]).filter(Boolean).join(", ")); }
+    },
+    category13Group: {
+      snomedCodes: ["14168008"], // Rabies
+      get nameEN() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapEN[code]).filter(Boolean).join(", ")); },
+      get nameFR() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapFR[code]).filter(Boolean).join(", ")); }
+    },
+    category14Group: {
+      snomedCodes: ["409498004", "45901000087102"], // Anthrax, Zaire Ebolavirus disease
+      get nameEN() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapEN[code]).filter(Boolean).join(", ")); },
+      get nameFR() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapFR[code]).filter(Boolean).join(", ")); }
+    },
+    category15Group: {
+      snomedCodes: ["63650001", "11840006", "4834000"], // Cholera, Traveler's diarrhea, Typhoid fever
+      get nameEN() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapEN[code]).filter(Boolean).join(", ")); },
+      get nameFR() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapFR[code]).filter(Boolean).join(", ")); }
+    },
+    category16Group: {
+      snomedCodes: ["111864006", "52947006", "712986001"], // Chikungunya fever, Japanese encephalitis, Tickborne encephalitis
+      get nameEN() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapEN[code]).filter(Boolean).join(", ")); },
+      get nameFR() { return cleanLabel(this.snomedCodes.map(code => diseaseNameMapFR[code]).filter(Boolean).join(", ")); }
+    },
+    unspecified: {
+      snomedCodes: [],
+      get nameEN() { return "Unspecified"; },
+      get nameFR() { return "Non spécifié"; }
+    }
+  };
+
+  return staticLabels;
+}
+
+// +----------------------------+
+// | parseNVCVaccineMappings    |
+// +----------------------------+
+export async function parseNVCVaccineMappings(json) {
   const table = json?.table || {}; 
   const parsed = {};
+  const categoryLabels = await buildCategoryLabels();
 
   Object.keys(table).forEach(vaccineCode => {
-    const entry = table[vaccineCode]; // loop through vaccine code
-    const diseases = (entry.diseaseEN || []).map(diseaseObj => { //extract value which is the disease names
+    const entry = table[vaccineCode];
+    
+    // Extract diseases from NVC data
+    const diseases = (entry.diseaseEN || []).map(diseaseObj => {
       return Object.values(diseaseObj)[0];
     });
 
-    parsed[vaccineCode] = { // Return display name and disease names
+    // If no diseases found in NVC data, try to infer from display name
+    let finalDiseases = diseases;
+    if (diseases.length === 0) {
+      finalDiseases = inferDiseasesFromDisplayName(entry.displayEN, categoryLabels);
+    }
+
+    // Extract French diseases from NVC data
+    const diseasesFR = (entry.diseaseFR || []).map(diseaseObj => {
+      return Object.values(diseaseObj)[0];
+    });
+
+    // If no French diseases found in NVC data, try to infer from display name
+    let finalDiseasesFR = diseasesFR;
+    if (diseasesFR.length === 0) {
+      finalDiseasesFR = inferDiseasesFromDisplayName(entry.displayFR, categoryLabels, 'FR');
+    }
+
+    parsed[vaccineCode] = {
       displayName: entry.displayEN || "Unknown",
-      diseases: diseases.length ? diseases : ["Unknown"], // If it's truthy, return the diseases OW retun "Unknown"
+      displayNameFR: entry.displayFR || "Inconnu",
+      diseases: finalDiseases.length ? finalDiseases : ["Unknown"],
+      diseasesFR: finalDiseasesFR.length ? finalDiseasesFR : ["Inconnu"],
+      categoryLabels: categoryLabels
     };
   });
-  return (parsed);
+  
+  return parsed;
+}
+
+// +----------------------------+
+// | inferDiseasesFromDisplayName |
+// +----------------------------+
+
+function inferDiseasesFromDisplayName(displayName, categoryLabels, language = 'EN') {
+  if (!displayName) return [];
+
+  const displayLower = displayName.toLowerCase();
+  const diseases = [];
+
+  // Map display name keywords to disease categories
+  const keywordMappings = {
+    // English keywords
+    'diphtheria': language === 'FR' ? categoryLabels.category1Group.nameFR : categoryLabels.category1Group.nameEN,
+    'tetanus': language === 'FR' ? categoryLabels.category1Group.nameFR : categoryLabels.category1Group.nameEN,
+    'pertussis': language === 'FR' ? categoryLabels.category1Group.nameFR : categoryLabels.category1Group.nameEN,
+    'polio': language === 'FR' ? categoryLabels.category1Group.nameFR : categoryLabels.category1Group.nameEN,
+    'haemophilus': language === 'FR' ? categoryLabels.category1Group.nameFR : categoryLabels.category1Group.nameEN,
+    'hib': language === 'FR' ? categoryLabels.category1Group.nameFR : categoryLabels.category1Group.nameEN,
+    'rotavirus': language === 'FR' ? categoryLabels.category2Group.nameFR : categoryLabels.category2Group.nameEN,
+    'tuberculosis': language === 'FR' ? categoryLabels.category3Group.nameFR : categoryLabels.category3Group.nameEN,
+    'hepatitis a': language === 'FR' ? categoryLabels.category4Group.nameFR : categoryLabels.category4Group.nameEN,
+    'hepatitis b': language === 'FR' ? categoryLabels.category4Group.nameFR : categoryLabels.category4Group.nameEN,
+    'hepatitis': language === 'FR' ? categoryLabels.category4Group.nameFR : categoryLabels.category4Group.nameEN,
+    'measles': language === 'FR' ? categoryLabels.category5Group.nameFR : categoryLabels.category5Group.nameEN,
+    'mumps': language === 'FR' ? categoryLabels.category5Group.nameFR : categoryLabels.category5Group.nameEN,
+    'rubella': language === 'FR' ? categoryLabels.category5Group.nameFR : categoryLabels.category5Group.nameEN,
+    'varicella': language === 'FR' ? categoryLabels.category5Group.nameFR : categoryLabels.category5Group.nameEN,
+    'meningococcal': language === 'FR' ? categoryLabels.category6Group.nameFR : categoryLabels.category6Group.nameEN,
+    'pneumococcal': language === 'FR' ? categoryLabels.category7Group.nameFR : categoryLabels.category7Group.nameEN,
+    'hpv': language === 'FR' ? categoryLabels.category8Group.nameFR : categoryLabels.category8Group.nameEN,
+    'papilloma': language === 'FR' ? categoryLabels.category8Group.nameFR : categoryLabels.category8Group.nameEN,
+    'covid': language === 'FR' ? categoryLabels.category9Group.nameFR : categoryLabels.category9Group.nameEN,
+    'influenza': language === 'FR' ? categoryLabels.category9Group.nameFR : categoryLabels.category9Group.nameEN,
+    'flu': language === 'FR' ? categoryLabels.category9Group.nameFR : categoryLabels.category9Group.nameEN,
+    'shingles': language === 'FR' ? categoryLabels.category10Group.nameFR : categoryLabels.category10Group.nameEN,
+    'herpes zoster': language === 'FR' ? categoryLabels.category10Group.nameFR : categoryLabels.category10Group.nameEN,
+    'rsv': language === 'FR' ? categoryLabels.category11Group.nameFR : categoryLabels.category11Group.nameEN,
+    'respiratory syncytial': language === 'FR' ? categoryLabels.category11Group.nameFR : categoryLabels.category11Group.nameEN,
+    'smallpox': language === 'FR' ? categoryLabels.category12Group.nameFR : categoryLabels.category12Group.nameEN,
+    'mpox': language === 'FR' ? categoryLabels.category12Group.nameFR : categoryLabels.category12Group.nameEN,
+    'rabies': language === 'FR' ? categoryLabels.category13Group.nameFR : categoryLabels.category13Group.nameEN,
+    'anthrax': language === 'FR' ? categoryLabels.category14Group.nameFR : categoryLabels.category14Group.nameEN,
+    'ebola': language === 'FR' ? categoryLabels.category14Group.nameFR : categoryLabels.category14Group.nameEN,
+    'cholera': language === 'FR' ? categoryLabels.category15Group.nameFR : categoryLabels.category15Group.nameEN,
+    'typhoid': language === 'FR' ? categoryLabels.category15Group.nameFR : categoryLabels.category15Group.nameEN,
+    'chikungunya': language === 'FR' ? categoryLabels.category16Group.nameFR : categoryLabels.category16Group.nameEN,
+    'japanese encephalitis': language === 'FR' ? categoryLabels.category16Group.nameFR : categoryLabels.category16Group.nameEN,
+    'tickborne encephalitis': language === 'FR' ? categoryLabels.category16Group.nameFR : categoryLabels.category16Group.nameEN,
+    
+    // French keywords
+    'diphtérie': language === 'FR' ? categoryLabels.category1Group.nameFR : categoryLabels.category1Group.nameEN,
+    'tétanos': language === 'FR' ? categoryLabels.category1Group.nameFR : categoryLabels.category1Group.nameEN,
+    'coqueluche': language === 'FR' ? categoryLabels.category1Group.nameFR : categoryLabels.category1Group.nameEN,
+    'poliomyélite': language === 'FR' ? categoryLabels.category1Group.nameFR : categoryLabels.category1Group.nameEN,
+    'haemophilus': language === 'FR' ? categoryLabels.category1Group.nameFR : categoryLabels.category1Group.nameEN,
+    'rotavirus': language === 'FR' ? categoryLabels.category2Group.nameFR : categoryLabels.category2Group.nameEN,
+    'tuberculose': language === 'FR' ? categoryLabels.category3Group.nameFR : categoryLabels.category3Group.nameEN,
+    'hépatite a': language === 'FR' ? categoryLabels.category4Group.nameFR : categoryLabels.category4Group.nameEN,
+    'hépatite b': language === 'FR' ? categoryLabels.category4Group.nameFR : categoryLabels.category4Group.nameEN,
+    'hépatite': language === 'FR' ? categoryLabels.category4Group.nameFR : categoryLabels.category4Group.nameEN,
+    'rougeole': language === 'FR' ? categoryLabels.category5Group.nameFR : categoryLabels.category5Group.nameEN,
+    'oreillons': language === 'FR' ? categoryLabels.category5Group.nameFR : categoryLabels.category5Group.nameEN,
+    'rubéole': language === 'FR' ? categoryLabels.category5Group.nameFR : categoryLabels.category5Group.nameEN,
+    'varicelle': language === 'FR' ? categoryLabels.category5Group.nameFR : categoryLabels.category5Group.nameEN,
+    'méningocoque': language === 'FR' ? categoryLabels.category6Group.nameFR : categoryLabels.category6Group.nameEN,
+    'pneumocoque': language === 'FR' ? categoryLabels.category7Group.nameFR : categoryLabels.category7Group.nameEN,
+    'vph': language === 'FR' ? categoryLabels.category8Group.nameFR : categoryLabels.category8Group.nameEN,
+    'papillome': language === 'FR' ? categoryLabels.category8Group.nameFR : categoryLabels.category8Group.nameEN,
+    'covid': language === 'FR' ? categoryLabels.category9Group.nameFR : categoryLabels.category9Group.nameEN,
+    'grippe': language === 'FR' ? categoryLabels.category9Group.nameFR : categoryLabels.category9Group.nameEN,
+    'influenza': language === 'FR' ? categoryLabels.category9Group.nameFR : categoryLabels.category9Group.nameEN,
+    'zona': language === 'FR' ? categoryLabels.category10Group.nameFR : categoryLabels.category10Group.nameEN,
+    'vrs': language === 'FR' ? categoryLabels.category11Group.nameFR : categoryLabels.category11Group.nameEN,
+    'variole': language === 'FR' ? categoryLabels.category12Group.nameFR : categoryLabels.category12Group.nameEN,
+    'rage': language === 'FR' ? categoryLabels.category13Group.nameFR : categoryLabels.category13Group.nameEN,
+    'choléra': language === 'FR' ? categoryLabels.category15Group.nameFR : categoryLabels.category15Group.nameEN,
+    'typhoïde': language === 'FR' ? categoryLabels.category15Group.nameFR : categoryLabels.category15Group.nameEN
+  };
+
+  // Check for keyword matches
+  for (const [keyword, diseaseGroup] of Object.entries(keywordMappings)) {
+    if (displayLower.includes(keyword)) {
+      diseases.push(diseaseGroup);
+    }
+  }
+
+  return diseases;
 }
 // +--------------+
 // | getFromLocal |
